@@ -1,0 +1,22 @@
+{
+    "name": "fusic/valii",
+    "description": "",
+    "require": {
+        "php": "^7.1.3",
+        "illuminate/validation": "~5.8",
+        "illuminate/translation": "~5.8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Valii\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
+}
