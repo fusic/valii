@@ -26,6 +26,6 @@ class Hiragana implements Rule
      */
     public function message()
     {
-        return 'Please enter hiragana.';
+        return 'The :attribute must be Hiragana.';
     }
 }

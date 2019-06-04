@@ -26,6 +26,6 @@ class HankakuKatakana implements Rule
      */
     public function message()
     {
-        return 'Please enter katakana.';
+        return 'The :attribute must be half-width Katakana.';
     }
 }

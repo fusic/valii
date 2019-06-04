@@ -26,6 +26,6 @@ class Zenkaku implements Rule
      */
     public function message()
     {
-        return 'Please enter zenkaku.';
+        return 'The :attribute must be full-width character.';
     }
 }

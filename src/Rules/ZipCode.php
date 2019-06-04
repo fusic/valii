@@ -28,6 +28,6 @@ class ZipCode implements Rule
      */
     public function message()
     {
-        return 'The zip code is incorrect.';
+        return 'The :attribute is not a valid ZIP Code.';
     }
 }

@@ -28,6 +28,6 @@ class Tel implements Rule
      */
     public function message()
     {
-        return 'The phone number is incorrect.';
+        return 'The :attribute is not a valid phone number.';
     }
 }
