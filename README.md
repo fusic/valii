@@ -18,6 +18,8 @@ composer require fusic/valii
   - 半角ｶﾀｶﾅチェック
 - Zenkaku
   - 全角のみチェック
+- ZipCode
+  - 郵便番号チェック
 
 ## Usage
 
