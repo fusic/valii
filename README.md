@@ -1,8 +1,8 @@
 # Valii
 
-![CircleCI](https://img.shields.io/circleci/build/github/fusic/valii.svg?style=flat-square)
-![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/fusic/valii.svg?style=flat-square)
-![Codecov](https://img.shields.io/codecov/c/github/fusic/valii.svg?style=flat-square)
+[![CircleCI](https://img.shields.io/circleci/build/github/fusic/valii.svg?style=flat-square)](https://circleci.com/gh/fusic/valii)
+[![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/fusic/valii.svg?style=flat-square)](https://scrutinizer-ci.com/g/fusic/valii/)
+[![Codecov](https://img.shields.io/codecov/c/github/fusic/valii.svg?style=flat-square)](https://codecov.io/gh/fusic/valii/)
 
 ## Setup
 
