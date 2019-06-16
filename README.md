@@ -1,5 +1,8 @@
 # Valii
 
+![CircleCI](https://img.shields.io/circleci/build/github/fusic/valii.svg?style=flat-square)
+![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/fusic/valii.svg?style=flat-square)
+
 ## Setup
 
 ```
