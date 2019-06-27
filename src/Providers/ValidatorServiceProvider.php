@@ -14,8 +14,8 @@ class ValidatorServiceProvider extends ServiceProvider
 
         // バリデーションメッセージを取得
         $customMessages = trans('valii::validation');
-        Validator::resolver(function ($translator, $data, $rules, $messages) use ($customMessages) {
-            $validator = new ValiiValidator($translator, $data, $rules, $messages);
+        Validator::resolver(function ($translator, $data, $rules, $messages, $attributes) use ($customMessages) {
+            $validator = new ValiiValidator($translator, $data, $rules, $messages, $attributes);
 
             // バリデータにメッセージ群をセット
             $validator->setCustomMessages($customMessages);
