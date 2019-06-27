@@ -6,7 +6,9 @@ use Illuminate\Contracts\Validation\Rule;
 
 class ZipCode implements Rule
 {
-    public $parameters;
+    public $parameters = [
+        'strict' => false
+    ];
 
     public function __construct($parameters = [])
     {
