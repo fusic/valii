@@ -38,3 +38,40 @@ public function rules()
         ];
     }
 ```
+
+or 
+
+in app.php
+
+```
+return [
+    ...
+    'providers' =>  [
+      ...
+      Valii\Providers\ValidatorServiceProvider::class // Add this
+    ]
+]
+```
+
+then
+
+```
+public function rules()
+    {
+        return [
+            "name" => [
+                'required',
+                'hiragana'
+            ],
+            "tel" =>  [
+                'tel'
+            ],
+            "zip_code"  => [
+                'zip_code'
+            ],
+            "strict_zip_code"  =>  [
+                'zip_code:strict'
+            ]
+        ];
+    }
+```
