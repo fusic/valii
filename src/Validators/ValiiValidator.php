@@ -99,6 +99,12 @@ class ValiiValidator extends Validator
     public function validateZipCode(string $attribute, $value, array $parameters): bool
     {
         $regex = '/^\d{3}\-?\d{4}$/';
+
+        // in strict mode, $value must include a hyphen
+        if ($parameters[0] == 'strict') {
+          $regex = '/^\d{3}\-\d{4}$/';
+        }
+        
         return preg_match($regex, $value);
     }
 }

@@ -6,6 +6,13 @@ use Illuminate\Contracts\Validation\Rule;
 
 class ZipCode implements Rule
 {
+    public $parameters;
+
+    public function __construct($parameters = [])
+    {
+        $this->parameters = $parameters;
+    }
+
     /**
      * Determine if the validation rule passes.
      *
@@ -18,6 +25,11 @@ class ZipCode implements Rule
     public function passes($attribute, $value)
     {
         $regex = '/^\d{3}\-?\d{4}$/';
+
+        // in strict mode, $value must include a hyphen
+        if ($this->parameters[0] == 'strict') {
+          $regex = '/^\d{3}\-\d{4}$/';
+        }
         return preg_match($regex, $value);
     }
 
