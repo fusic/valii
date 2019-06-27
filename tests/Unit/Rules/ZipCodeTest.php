@@ -45,7 +45,7 @@ class ZipCodeTest extends TestCase
     {
         $rule = [
             'name' => [
-                new ZipCode(['strict'])
+                new ZipCode(['strict' => true])
             ]
         ];
         $dataList = [];
