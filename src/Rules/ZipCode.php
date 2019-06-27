@@ -27,7 +27,7 @@ class ZipCode implements Rule
         $regex = '/^\d{3}\-?\d{4}$/';
 
         // in strict mode, $value must include a hyphen
-        if ($this->parameters[0] == 'strict') {
+        if ($this->parameters['strict'] === true) {
           $regex = '/^\d{3}\-\d{4}$/';
         }
         return preg_match($regex, $value);
