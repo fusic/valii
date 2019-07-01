@@ -31,45 +31,13 @@ composer require fusic/valii
 public function rules()
     {
         return [
-            "name" => [
-                'required',
-                new Hiragana()
-            ]
-        ];
-    }
-```
-
-or 
-
-in app.php
-
-```
-return [
-    ...
-    'providers' =>  [
-      ...
-      Valii\Providers\ValidatorServiceProvider::class // Add this
-    ]
-]
-```
-
-then
-
-```
-public function rules()
-    {
-        return [
-            "name" => [
-                'required',
-                'hiragana'
-            ],
-            "tel" =>  [
-                'tel'
-            ],
+            "name" => 'required|hiragana',
+            "tel" =>  'tel',
             "zip_code"  => [
                 'zip_code'
             ],
             "strict_zip_code"  =>  [
+                'required',
                 'zip_code:strict'
             ]
         ];
