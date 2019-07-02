@@ -12,7 +12,7 @@ class ZipCode implements Rule
 
     public function __construct($parameters = [])
     {
-        $this->parameters = $parameters;
+        $this->parameters = array_merge($this->parameters, $parameters);
     }
 
     /**

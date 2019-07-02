@@ -101,10 +101,10 @@ class ValiiValidator extends Validator
         $regex = '/^\d{3}\-?\d{4}$/';
 
         // in strict mode, $value must include a hyphen
-        if ($parameters[0] == 'strict') {
+        if (isset($parameters[0]) && $parameters[0] == 'strict') {
           $regex = '/^\d{3}\-\d{4}$/';
         }
-        
+
         return preg_match($regex, $value);
     }
 }
