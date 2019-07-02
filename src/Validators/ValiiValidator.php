@@ -104,7 +104,24 @@ class ValiiValidator extends Validator
         if ($parameters[0] == 'strict') {
           $regex = '/^\d{3}\-\d{4}$/';
         }
-        
+
         return preg_match($regex, $value);
+    }
+
+    /**
+     * validation max byte
+     *
+     * @SuppressWarnings("unused")
+     *
+     * @param  string $attribute
+     * @param  mixed  $value
+     * @param  mixed  $parameters
+     * @return bool
+     */
+    public function validateMaxByte(string $attribute, $value, array $parameters): bool
+    {
+        $this->requireParameterCount(1, $parameters, 'max');
+
+        return mb_strwidth($value) <= $parameters[0];
     }
 }

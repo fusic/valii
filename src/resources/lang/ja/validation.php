@@ -18,5 +18,6 @@ return [
     'hankaku_katakana' => ':attributeは半角カタカナのみにしてください。',
     'zip_code' => ':attributeは郵便番号の書式にしてください。',
     'zenkaku' => ':attributeは全角のみにしてください。',
-    'katakana' => ':attributeはカタカナのみにしてください。'
+    'katakana' => ':attributeはカタカナのみにしてください。',
+    'max_byte' => ':attributeは、:maxバイト以下にしてください。',
 ];

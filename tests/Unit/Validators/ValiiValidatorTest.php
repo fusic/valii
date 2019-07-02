@@ -149,6 +149,29 @@ class ValiiValidatorTest extends TestCase
     }
 
     /**
+     * マルチバイト対応のバイト数のテスト
+     *
+     * @dataProvider providerMaxByte
+     * @param $text string テストデータ
+     * @param mixed $expect
+     */
+    public function test_バイト数チェック($text, $expect)
+    {
+        $rule = [
+            'memo' => [
+                'max_byte:10'
+            ]
+        ];
+        $dataList = [];
+        $dataList['memo'] = $text;
+
+        $trans = $this->getTranslator();
+        $validator = new ValiiValidator($trans, $dataList, $rule);
+        $result = $validator->passes();
+        $this->assertEquals($expect, $result);
+    }
+
+    /**
      * テストデータ
      *
      * @return array
@@ -246,6 +269,24 @@ class ValiiValidatorTest extends TestCase
             '郵便番号（数字6桁）' => ['123456', false],
             '郵便番号（文字）' => ['abcdecf', false],
             '郵便番号（全角）' => ['１２３４５６７', false],
+        ];
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerMaxByte(): array
+    {
+        return [
+            '0バイト' => ['', true],
+            '半角のみ10バイト' => ['0123456789', true],
+            '半角のみ11バイト' => ['12345678901', false],
+            '全角のみ10バイト' => ['１２３４５', true],
+            '全角のみ12バイト' => ['１２３４５６', false],
+            '半角全角10バイト' => ['1234１２３', true],
+            '半角全角11バイト' => ['１２３４123', false],
         ];
     }
 }
