@@ -15,7 +15,7 @@ class ZipCodeTest extends TestCase
      * 郵便番号のテスト
      *
      * @dataProvider providerZipCode
-     * @param $tel string テストデータ
+     * @param $zipCode string テストデータ
      * @param mixed $expect
      */
     public function test_郵便番号チェック($zipCode, $expect)
@@ -38,7 +38,7 @@ class ZipCodeTest extends TestCase
      * 郵便番号のテスト
      *
      * @dataProvider providerZipCodeWithHyphen
-     * @param $tel string テストデータ
+     * @param $zipCode string テストデータ
      * @param mixed $expect
      */
     public function test_郵便番号チェック（ハイフンあり）($zipCode, $expect)

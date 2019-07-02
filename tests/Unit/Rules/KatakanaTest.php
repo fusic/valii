@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Valii\Rules\Katakana;
 
 /**
- * TelTest
+ * KatakanaTest
  *
  */
 class KatakanaTest extends TestCase
@@ -15,10 +15,10 @@ class KatakanaTest extends TestCase
      * 全角カタカナのテスト
      *
      * @dataProvider providerKatakana
-     * @param $tel string テストデータ
+     * @param $katakana string テストデータ
      * @param mixed $expect
      */
-    public function test_全角カタカナチェック($tel, $expect)
+    public function test_全角カタカナチェック($katakana, $expect)
     {
         $rule = [
             'name' => [
@@ -26,7 +26,7 @@ class KatakanaTest extends TestCase
             ]
         ];
         $dataList = [];
-        $dataList['name'] = $tel;
+        $dataList['name'] = $katakana;
 
         $trans = $this->getTranslator();
         $validator = new Validator($trans, $dataList, $rule);
