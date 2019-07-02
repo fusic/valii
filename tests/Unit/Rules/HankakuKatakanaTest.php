@@ -14,7 +14,7 @@ class HankakuKatakanaTest extends TestCase
     /**
      * 半角ｶﾀｶﾅのテスト
      *
-     * @dataProvider providerTel
+     * @dataProvider providerHankakuKatakana
      * @param $tel string テストデータ
      * @param mixed $expect
      */
@@ -39,7 +39,7 @@ class HankakuKatakanaTest extends TestCase
      *
      * @return array
      */
-    public function providerTel(): array
+    public function providerHankakuKatakana(): array
     {
         return [
             '半角ｶﾀｶﾅのみ' => ['ｻﾝﾌﾟﾙ', true],

@@ -14,7 +14,7 @@ class KatakanaTest extends TestCase
     /**
      * 全角カタカナのテスト
      *
-     * @dataProvider providerTel
+     * @dataProvider providerKatakana
      * @param $tel string テストデータ
      * @param mixed $expect
      */
@@ -39,7 +39,7 @@ class KatakanaTest extends TestCase
      *
      * @return array
      */
-    public function providerTel(): array
+    public function providerKatakana(): array
     {
         return [
             '全角カタカナ' => ['サンプル', true],

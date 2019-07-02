@@ -14,7 +14,7 @@ class HiraganaTest extends TestCase
     /**
      * ひらがなのテスト
      *
-     * @dataProvider providerTel
+     * @dataProvider providerHiragana
      * @param $tel string テストデータ
      * @param mixed $expect
      */
@@ -39,7 +39,7 @@ class HiraganaTest extends TestCase
      *
      * @return array
      */
-    public function providerTel(): array
+    public function providerHiragana(): array
     {
         return [
             'ひらがなのみ' => ['さんぷる', true],

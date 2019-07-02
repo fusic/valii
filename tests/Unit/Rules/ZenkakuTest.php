@@ -14,7 +14,7 @@ class ZenkakuTest extends TestCase
     /**
      * 全角のテスト
      *
-     * @dataProvider providerTel
+     * @dataProvider providerZenkaku
      * @param $tel string テストデータ
      * @param mixed $expect
      */
@@ -39,7 +39,7 @@ class ZenkakuTest extends TestCase
      *
      * @return array
      */
-    public function providerTel(): array
+    public function providerZenkaku(): array
     {
         return [
             '全角ひらがな' => ['さんぷる', true],
