@@ -124,4 +124,18 @@ class ValiiValidator extends Validator
 
         return mb_strwidth($value) <= $parameters[0];
     }
+
+    /**
+     * replaver fot validateMaxByte parameter
+     *
+     * @param  string $message
+     * @param  string $attribute
+     * @param  string $rule
+     * @param  array $parameters
+     * @return string
+     */
+    protected function replaceMaxByte($message, $attribute, $rule, $parameters)
+    {
+        return str_replace(':max_byte', $parameters[0], $message);
+    }
 }

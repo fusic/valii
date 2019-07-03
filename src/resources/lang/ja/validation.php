@@ -19,5 +19,5 @@ return [
     'zip_code' => ':attributeは郵便番号の書式にしてください。',
     'zenkaku' => ':attributeは全角のみにしてください。',
     'katakana' => ':attributeはカタカナのみにしてください。',
-    'max_byte' => ':attributeは、:maxバイト以下にしてください。',
+    'max_byte' => ':attributeは、:max_byteバイト以下にしてください。',
 ];

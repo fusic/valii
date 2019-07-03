@@ -44,6 +44,6 @@ class MaxByte implements Rule
      */
     public function message()
     {
-        return 'The :attribute may not be greater than :max bytes.';
+        return 'The :attribute may not be greater than ' . $this->maxByte . '.';
     }
 }

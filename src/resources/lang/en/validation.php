@@ -19,5 +19,5 @@ return [
     'zip_code' => 'The :attribute is not a valid ZIP Code.',
     'zenkaku' => 'The :attribute must be full-width character.',
     'katakana' => 'The :attribute must be Katakana.',
-    'max_byte' => 'The :attribute may not be greater than :max bytes.'
+    'max_byte' => 'The :attribute may not be greater than :max_byte bytes.'
 ];
