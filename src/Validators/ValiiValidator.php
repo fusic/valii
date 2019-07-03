@@ -120,7 +120,7 @@ class ValiiValidator extends Validator
      */
     public function validateMaxByte(string $attribute, $value, array $parameters): bool
     {
-        $this->requireParameterCount(1, $parameters, 'max');
+        $this->requireParameterCount(1, $parameters, 'max_byte');
 
         return mb_strwidth($value) <= $parameters[0];
     }
