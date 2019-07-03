@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Valii\Rules\Zenkaku;
 
 /**
- * TelTest
+ * ZenkakuTest
  *
  */
 class ZenkakuTest extends TestCase
@@ -14,11 +14,11 @@ class ZenkakuTest extends TestCase
     /**
      * 全角のテスト
      *
-     * @dataProvider providerTel
-     * @param $tel string テストデータ
+     * @dataProvider providerZenkaku
+     * @param $zenkaku string テストデータ
      * @param mixed $expect
      */
-    public function test_全角チェック($tel, $expect)
+    public function test_全角チェック($zenkaku, $expect)
     {
         $rule = [
             'name' => [
@@ -26,7 +26,7 @@ class ZenkakuTest extends TestCase
             ]
         ];
         $dataList = [];
-        $dataList['name'] = $tel;
+        $dataList['name'] = $zenkaku;
 
         $trans = $this->getTranslator();
         $validator = new Validator($trans, $dataList, $rule);
@@ -39,7 +39,7 @@ class ZenkakuTest extends TestCase
      *
      * @return array
      */
-    public function providerTel(): array
+    public function providerZenkaku(): array
     {
         return [
             '全角ひらがな' => ['さんぷる', true],

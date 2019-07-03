@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Valii\Rules\Hiragana;
 
 /**
- * TelTest
+ * HiraganaTest
  *
  */
 class HiraganaTest extends TestCase
@@ -14,11 +14,11 @@ class HiraganaTest extends TestCase
     /**
      * ひらがなのテスト
      *
-     * @dataProvider providerTel
-     * @param $tel string テストデータ
+     * @dataProvider providerHiragana
+     * @param $hiragana string テストデータ
      * @param mixed $expect
      */
-    public function test_ひらがなチェック($tel, $expect)
+    public function test_ひらがなチェック($hiragana, $expect)
     {
         $rule = [
             'name' => [
@@ -26,7 +26,7 @@ class HiraganaTest extends TestCase
             ]
         ];
         $dataList = [];
-        $dataList['name'] = $tel;
+        $dataList['name'] = $hiragana;
 
         $trans = $this->getTranslator();
         $validator = new Validator($trans, $dataList, $rule);
@@ -39,7 +39,7 @@ class HiraganaTest extends TestCase
      *
      * @return array
      */
-    public function providerTel(): array
+    public function providerHiragana(): array
     {
         return [
             'ひらがなのみ' => ['さんぷる', true],

@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Valii\Rules\HankakuKatakana;
 
 /**
- * TelTest
+ * HankakuKatakanaTest
  *
  */
 class HankakuKatakanaTest extends TestCase
@@ -14,11 +14,11 @@ class HankakuKatakanaTest extends TestCase
     /**
      * 半角ｶﾀｶﾅのテスト
      *
-     * @dataProvider providerTel
-     * @param $tel string テストデータ
+     * @dataProvider providerHankakuKatakana
+     * @param $hankakuKatakana string テストデータ
      * @param mixed $expect
      */
-    public function test_半角ｶﾀｶﾅチェック($tel, $expect)
+    public function test_半角ｶﾀｶﾅチェック($hankakuKatakana, $expect)
     {
         $rule = [
             'name' => [
@@ -26,7 +26,7 @@ class HankakuKatakanaTest extends TestCase
             ]
         ];
         $dataList = [];
-        $dataList['name'] = $tel;
+        $dataList['name'] = $hankakuKatakana;
 
         $trans = $this->getTranslator();
         $validator = new Validator($trans, $dataList, $rule);
@@ -39,7 +39,7 @@ class HankakuKatakanaTest extends TestCase
      *
      * @return array
      */
-    public function providerTel(): array
+    public function providerHankakuKatakana(): array
     {
         return [
             '半角ｶﾀｶﾅのみ' => ['ｻﾝﾌﾟﾙ', true],

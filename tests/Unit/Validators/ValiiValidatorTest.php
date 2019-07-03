@@ -14,10 +14,10 @@ class ValiiValidatorTest extends TestCase
      * 全角カタカナのテスト
      *
      * @dataProvider providerKatakana
-     * @param $tel string テストデータ
+     * @param $katakana string テストデータ
      * @param mixed $expect
      */
-    public function test_全角カタカナチェック($tel, $expect)
+    public function test_全角カタカナチェック($katakana, $expect)
     {
         $rule = [
             'name' => [
@@ -25,7 +25,7 @@ class ValiiValidatorTest extends TestCase
             ]
         ];
         $dataList = [];
-        $dataList['name'] = $tel;
+        $dataList['name'] = $katakana;
 
         $trans = $this->getTranslator();
         $validator = new ValiiValidator($trans, $dataList, $rule);
@@ -37,10 +37,10 @@ class ValiiValidatorTest extends TestCase
      * 半角ｶﾀｶﾅのテスト
      *
      * @dataProvider providerHankakuKatakana
-     * @param $tel string テストデータ
+     * @param $katakana string テストデータ
      * @param mixed $expect
      */
-    public function test_半角ｶﾀｶﾅチェック($tel, $expect)
+    public function test_半角ｶﾀｶﾅチェック($katakana, $expect)
     {
         $rule = [
             'name' => [
@@ -48,7 +48,7 @@ class ValiiValidatorTest extends TestCase
             ]
         ];
         $dataList = [];
-        $dataList['name'] = $tel;
+        $dataList['name'] = $katakana;
 
         $trans = $this->getTranslator();
         $validator = new ValiiValidator($trans, $dataList, $rule);
@@ -60,10 +60,10 @@ class ValiiValidatorTest extends TestCase
      * ひらがなのテスト
      *
      * @dataProvider providerHiragana
-     * @param $tel string テストデータ
+     * @param $hiragana string テストデータ
      * @param mixed $expect
      */
-    public function test_ひらがなチェック($tel, $expect)
+    public function test_ひらがなチェック($hiragana, $expect)
     {
         $rule = [
             'name' => [
@@ -71,7 +71,7 @@ class ValiiValidatorTest extends TestCase
             ]
         ];
         $dataList = [];
-        $dataList['name'] = $tel;
+        $dataList['name'] = $hiragana;
 
         $trans = $this->getTranslator();
         $validator = new ValiiValidator($trans, $dataList, $rule);
@@ -106,10 +106,10 @@ class ValiiValidatorTest extends TestCase
      * 全角のテスト
      *
      * @dataProvider providerZenkaku
-     * @param $tel string テストデータ
+     * @param $zenkaku string テストデータ
      * @param mixed $expect
      */
-    public function test_全角チェック($tel, $expect)
+    public function test_全角チェック($zenkaku, $expect)
     {
         $rule = [
             'name' => [
@@ -117,7 +117,7 @@ class ValiiValidatorTest extends TestCase
             ]
         ];
         $dataList = [];
-        $dataList['name'] = $tel;
+        $dataList['name'] = $zenkaku;
 
         $trans = $this->getTranslator();
         $validator = new ValiiValidator($trans, $dataList, $rule);
@@ -129,7 +129,7 @@ class ValiiValidatorTest extends TestCase
      * 郵便番号のテスト
      *
      * @dataProvider providerZipCode
-     * @param $tel string テストデータ
+     * @param $zipCode string テストデータ
      * @param mixed $expect
      */
     public function test_郵便番号チェック($zipCode, $expect)
