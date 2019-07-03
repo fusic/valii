@@ -168,7 +168,6 @@ class ValiiValidatorTest extends TestCase
         $trans = $this->getTranslator();
         $validator = new ValiiValidator($trans, $dataList, $rule);
         $result = $validator->passes();
-        echo($validator->errors());
         $this->assertEquals($expect, $result);
     }
 
