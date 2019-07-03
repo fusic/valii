@@ -10,6 +10,9 @@ use Tests\TestCase;
  */
 class ValiiValidatorTest extends TestCase
 {
+    # --------------------------------------------------------------
+    # katakana
+
     /**
      * 全角カタカナのテスト
      *
@@ -32,6 +35,24 @@ class ValiiValidatorTest extends TestCase
         $result = $validator->passes();
         $this->assertEquals($expect, $result);
     }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerKatakana(): array
+    {
+        return [
+            '全角カタカナ' => ['サンプル', true],
+            '全角ひらがな' => ['さんぷる', false],
+            '半角ｶﾀｶﾅ' => ['ｻﾝﾌﾟﾙ', false],
+            '半角英数' => ['abcd1234', false],
+        ];
+    }
+
+    # --------------------------------------------------------------
+    # hankaku_katakana
 
     /**
      * 半角ｶﾀｶﾅのテスト
@@ -57,6 +78,24 @@ class ValiiValidatorTest extends TestCase
     }
 
     /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerHankakuKatakana(): array
+    {
+        return [
+            '半角ｶﾀｶﾅのみ' => ['ｻﾝﾌﾟﾙ', true],
+            '全角カタカナのみ' => ['サンプル', false],
+            '全角半角カタカナ' => ['サンﾌﾟﾙ', false],
+            '半角英数' => ['abcd1234', false]
+        ];
+    }
+
+    # --------------------------------------------------------------
+    # hiragana
+
+    /**
      * ひらがなのテスト
      *
      * @dataProvider providerHiragana
@@ -78,6 +117,24 @@ class ValiiValidatorTest extends TestCase
         $result = $validator->passes();
         $this->assertEquals($expect, $result);
     }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerHiragana(): array
+    {
+        return [
+            'ひらがなのみ' => ['さんぷる', true],
+            'ひらがな以外' => ['ダミー情報', false],
+            'ひらがな以外混じり' => ['さんぷる情報', false],
+            '半角英数' => ['abcd1234', false]
+        ];
+    }
+
+    # --------------------------------------------------------------
+    # tel
 
     /**
      * 電話番号のテスト
@@ -103,6 +160,27 @@ class ValiiValidatorTest extends TestCase
     }
 
     /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerTel(): array
+    {
+        return [
+            '電話番号(ハイフンあり)' => ['092-737-2616', true],
+            '電話番号(ハイフンあり-東京-)' => ['03-6450-1633', true],
+            '電話番号(ハイフン無し)' => ['0927372616', true],
+            '電話番号(ハイフン無し-東京-)' => ['0364501633', true],
+            '電話番号(丸かっこ)' => ['092(737)2616', false],
+            '電話番号(不正フォーマット)' => ['abcdefg', false],
+            '電話番号(全角)' => ['０９２７３７２６１６', false]
+        ];
+    }
+
+    # --------------------------------------------------------------
+    # zenkaku
+
+    /**
      * 全角のテスト
      *
      * @dataProvider providerZenkaku
@@ -124,6 +202,29 @@ class ValiiValidatorTest extends TestCase
         $result = $validator->passes();
         $this->assertEquals($expect, $result);
     }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerZenkaku(): array
+    {
+        return [
+            '全角ひらがな' => ['さんぷる', true],
+            '全角カタカナ' => ['サンプル', true],
+            '全角数字' => ['０１２３', true],
+            '全角英字' => ['ＡＢＣＤ', true],
+            '全角漢字' => ['情報', true],
+            '半角ｶﾀｶﾅ' => ['ｻﾝﾌﾟﾙ', false],
+            '半角数字' => ['1234', false],
+            '半角英字' => ['abcd', false],
+            '全角半角混じり' => ['さんぷるｻﾝﾌﾟﾙ', false]
+        ];
+    }
+
+    # --------------------------------------------------------------
+    # zip_code
 
     /**
      * 郵便番号のテスト
@@ -149,6 +250,26 @@ class ValiiValidatorTest extends TestCase
     }
 
     /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerZipCode(): array
+    {
+        return [
+            '郵便番号' => ['123-4567', true],
+            '郵便番号（ハイフンなし）' => ['1234567', true],
+            '郵便番号（数字8桁）' => ['12345678', false],
+            '郵便番号（数字6桁）' => ['123456', false],
+            '郵便番号（文字）' => ['abcdecf', false],
+            '郵便番号（全角）' => ['１２３４５６７', false],
+        ];
+    }
+
+    # --------------------------------------------------------------
+    # max_byte
+
+    /**
      * マルチバイト対応のバイト数のテスト
      *
      * @dataProvider providerMaxByte
@@ -169,107 +290,6 @@ class ValiiValidatorTest extends TestCase
         $validator = new ValiiValidator($trans, $dataList, $rule);
         $result = $validator->passes();
         $this->assertEquals($expect, $result);
-    }
-
-    /**
-     * テストデータ
-     *
-     * @return array
-     */
-    public function providerKatakana(): array
-    {
-        return [
-            '全角カタカナ' => ['サンプル', true],
-            '全角ひらがな' => ['さんぷる', false],
-            '半角ｶﾀｶﾅ' => ['ｻﾝﾌﾟﾙ', false],
-            '半角英数' => ['abcd1234', false],
-        ];
-    }
-
-    /**
-     * テストデータ
-     *
-     * @return array
-     */
-    public function providerHankakuKatakana(): array
-    {
-        return [
-            '半角ｶﾀｶﾅのみ' => ['ｻﾝﾌﾟﾙ', true],
-            '全角カタカナのみ' => ['サンプル', false],
-            '全角半角カタカナ' => ['サンﾌﾟﾙ', false],
-            '半角英数' => ['abcd1234', false]
-        ];
-    }
-
-    /**
-     * テストデータ
-     *
-     * @return array
-     */
-    public function providerHiragana(): array
-    {
-        return [
-            'ひらがなのみ' => ['さんぷる', true],
-            'ひらがな以外' => ['ダミー情報', false],
-            'ひらがな以外混じり' => ['さんぷる情報', false],
-            '半角英数' => ['abcd1234', false]
-        ];
-    }
-
-    /**
-     * テストデータ
-     *
-     * @return array
-     */
-    public function providerTel(): array
-    {
-        return [
-            '電話番号(ハイフンあり)' => ['092-737-2616', true],
-            '電話番号(ハイフンあり-東京-)' => ['03-6450-1633', true],
-            '電話番号(ハイフン無し)' => ['0927372616', true],
-            '電話番号(ハイフン無し-東京-)' => ['0364501633', true],
-            '電話番号(丸かっこ)' => ['092(737)2616', false],
-            '電話番号(不正フォーマット)' => ['abcdefg', false],
-            '電話番号(全角)' => ['０９２７３７２６１６', false]
-        ];
-    }
-
-    /**
-     * テストデータ
-     *
-     * @return array
-     */
-    public function providerZenkaku(): array
-    {
-        return [
-            '全角ひらがな' => ['さんぷる', true],
-            '全角カタカナ' => ['サンプル', true],
-            '全角数字' => ['０１２３', true],
-            '全角英字' => ['ＡＢＣＤ', true],
-            '全角漢字' => ['情報', true],
-
-            '半角ｶﾀｶﾅ' => ['ｻﾝﾌﾟﾙ', false],
-            '半角数字' => ['1234', false],
-            '半角英字' => ['abcd', false],
-            '全角半角混じり' => ['さんぷるｻﾝﾌﾟﾙ', false]
-        ];
-    }
-
-    /**
-     * テストデータ
-     *
-     * @return array
-     */
-    public function providerZipCode(): array
-    {
-        return [
-            '郵便番号' => ['123-4567', true],
-            '郵便番号（ハイフンなし）' => ['1234567', true],
-            '郵便番号（数字8桁）' => ['12345678', false],
-            '郵便番号（数字6桁）' => ['123456', false],
-            '郵便番号（文字）' => ['abcdecf', false],
-            '郵便番号（全角）' => ['１２３４５６７', false],
-        ];
     }
 
     /**
