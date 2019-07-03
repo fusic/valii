@@ -107,4 +107,35 @@ class ValiiValidator extends Validator
 
         return preg_match($regex, $value);
     }
+
+    /**
+     * validation max byte
+     *
+     * @SuppressWarnings("unused")
+     *
+     * @param  string $attribute
+     * @param  mixed  $value
+     * @param  mixed  $parameters
+     * @return bool
+     */
+    public function validateMaxByte(string $attribute, $value, array $parameters): bool
+    {
+        $this->requireParameterCount(1, $parameters, 'max_byte');
+
+        return mb_strwidth($value) <= $parameters[0];
+    }
+
+    /**
+     * replaver fot validateMaxByte parameter
+     *
+     * @param  string $message
+     * @param  string $attribute
+     * @param  string $rule
+     * @param  array $parameters
+     * @return string
+     */
+    protected function replaceMaxByte($message, $attribute, $rule, $parameters)
+    {
+        return str_replace(':max_byte', $parameters[0], $message);
+    }
 }
