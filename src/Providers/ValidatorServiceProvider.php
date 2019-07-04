@@ -2,6 +2,7 @@
 
 namespace Valii\Providers;
 
+use App;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Valii\Validators\ValiiValidator;
@@ -12,9 +13,10 @@ class ValidatorServiceProvider extends ServiceProvider
     {
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'valii');
 
-        // バリデーションメッセージを取得
-        $customMessages = trans('valii::validation');
-        Validator::resolver(function ($translator, $data, $rules, $messages, $attributes) use ($customMessages) {
+        Validator::resolver(function ($translator, $data, $rules, $messages, $attributes) {
+            // バリデーションメッセージを取得
+            $customMessages = trans('valii::validation', [], \App::getLocale());
+
             $validator = new ValiiValidator($translator, $data, $rules, $messages, $attributes);
 
             // バリデータにメッセージ群をセット
