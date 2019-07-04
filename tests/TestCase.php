@@ -13,11 +13,4 @@ class TestCase extends BaseTestCase
             'Valii\Providers\ValidatorServiceProvider'
         ];
     }
-
-    protected function getTranslator()
-    {
-        return new Translator(
-            new ArrayLoader, 'en'
-        );
-    }
 }
