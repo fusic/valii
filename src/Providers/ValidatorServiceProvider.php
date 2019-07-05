@@ -20,7 +20,7 @@ class ValidatorServiceProvider extends ServiceProvider
             $validator = new ValiiValidator($translator, $data, $rules, $messages, $attributes);
 
             // バリデータにメッセージ群をセット
-            $validator->setCustomMessages(/** @scrutinizer ignore-type */ $customMessages);
+            $validator->setCustomMessages($customMessages);
             return $validator;
         });
     }
