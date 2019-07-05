@@ -13,14 +13,14 @@ class ValidatorServiceProvider extends ServiceProvider
     {
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'valii');
 
-        Validator::resolver(function ($translator, $data, $rules, $messages, $attributes) {
+        Validator::resolver(function($translator, $data, $rules, $messages, $attributes) {
             // バリデーションメッセージを取得
             $customMessages = trans('valii::validation', [], \App::getLocale());
 
             $validator = new ValiiValidator($translator, $data, $rules, $messages, $attributes);
 
             // バリデータにメッセージ群をセット
-            $validator->setCustomMessages($customMessages);
+            $validator->setCustomMessages(/** @scrutinizer ignore-type */ $customMessages);
             return $validator;
         });
     }
