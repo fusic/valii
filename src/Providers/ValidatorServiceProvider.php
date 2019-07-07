@@ -15,7 +15,7 @@ class ValidatorServiceProvider extends ServiceProvider
 
         Validator::resolver(function($translator, $data, $rules, $messages, $attributes) {
             // バリデーションメッセージを取得
-            $customMessages = trans('valii::validation', [], \App::getLocale());
+            $customMessages = trans('valii::validation', [], App::getLocale());
 
             $validator = new ValiiValidator($translator, $data, $rules, $messages, $attributes);
 
