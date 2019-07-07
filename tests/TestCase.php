@@ -1,8 +1,6 @@
 <?php
 namespace Tests;
 
-use Illuminate\Translation\ArrayLoader;
-use Illuminate\Translation\Translator;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase

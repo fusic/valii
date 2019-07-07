@@ -2,7 +2,7 @@
 namespace Tests\Unit\Validators;
 
 use App;
-use Valii\Validators\ValiiValidator;
+use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
 /**
@@ -20,11 +20,10 @@ class ValiiValidatorTest extends TestCase
      * @dataProvider providerKatakana
      * @param string $katakana
      * @param bool $expect
-     * @param sting $message
      */
     public function test_全角カタカナ($katakana, $expect)
     {
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $katakana,
             ],
@@ -57,14 +56,14 @@ class ValiiValidatorTest extends TestCase
      *
      * @dataProvider providerKatakanaMessage
      * @param string $katakana
-     * @param sting $locale
-     * @param sting $expect
+     * @param string $locale
+     * @param string $expect
      */
     public function test_全角カタカナ_メッセージ($katakana, $locale, $expect)
     {
         App::setLocale($locale);
 
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $katakana,
             ],
@@ -102,7 +101,7 @@ class ValiiValidatorTest extends TestCase
      */
     public function test_半角ｶﾀｶﾅ($katakana, $expect)
     {
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $katakana,
             ],
@@ -141,7 +140,7 @@ class ValiiValidatorTest extends TestCase
     {
         App::setLocale($locale);
 
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $katakana,
             ],
@@ -179,7 +178,7 @@ class ValiiValidatorTest extends TestCase
      */
     public function test_ひらがな($hiragana, $expect)
     {
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $hiragana,
             ],
@@ -211,14 +210,14 @@ class ValiiValidatorTest extends TestCase
      *
      * @dataProvider providerHiraganaMessage
      * @param string $hiragana
-     * @param sting $locale
-     * @param sting $expect
+     * @param string $locale
+     * @param string $expect
      */
     public function test_ひらがな_メッセージ($hiragana, $locale, $expect)
     {
         App::setLocale($locale);
 
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $hiragana,
             ],
@@ -256,7 +255,7 @@ class ValiiValidatorTest extends TestCase
      */
     public function test_全角($zenkaku, $expect)
     {
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $zenkaku,
             ],
@@ -292,15 +291,15 @@ class ValiiValidatorTest extends TestCase
      * 全角のエラーメッセージ テスト
      *
      * @dataProvider providerZenkakuMessage
-     * @param string $hiragana
-     * @param sting $locale
-     * @param sting $expect
+     * @param string $zenkaku
+     * @param string $locale
+     * @param string $expect
      */
     public function test_全角_メッセージ($zenkaku, $locale, $expect)
     {
         App::setLocale($locale);
 
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $zenkaku,
             ],
@@ -338,7 +337,7 @@ class ValiiValidatorTest extends TestCase
      */
     public function test_電話番号($tel, $expect)
     {
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $tel,
             ],
@@ -372,15 +371,15 @@ class ValiiValidatorTest extends TestCase
      * 電話番号のエラーメッセージ テスト
      *
      * @dataProvider providerTelMessage
-     * @param string $hiragana
-     * @param sting $locale
-     * @param sting $expect
+     * @param string $tel
+     * @param string $locale
+     * @param string $expect
      */
     public function test_電話番号_メッセージ($tel, $locale, $expect)
     {
         App::setLocale($locale);
 
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $tel,
             ],
@@ -418,7 +417,7 @@ class ValiiValidatorTest extends TestCase
      */
     public function test_郵便番号($zipCode, $expect)
     {
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $zipCode,
             ],
@@ -448,18 +447,57 @@ class ValiiValidatorTest extends TestCase
     }
 
     /**
+     * 郵便番号のテスト
+     *
+     * @dataProvider providerZipCodeStrict
+     * @param $zipCode string テストデータ
+     * @param bool $expect
+     */
+    public function test_郵便番号_strict($zipCode, $expect)
+    {
+        $validator = Validator::make(
+            [
+                'name' => $zipCode,
+            ],
+            [
+                'name' => 'zip_code:strict',
+            ]
+        );
+
+        $this->assertEquals($expect, $validator->passes());
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerZipCodeStrict(): array
+    {
+        return [
+            '郵便番号' => ['123-4567', true],
+            '郵便番号（ハイフンなし）' => ['1234567', false],
+            '郵便番号（数字8桁）' => ['12345678', false],
+            '郵便番号（数字6桁）' => ['123456', false],
+            '郵便番号（文字）' => ['abcdecf', false],
+            '郵便番号（全角ハイフンあり）' => ['１２３-４５６７', false],
+            '郵便番号（全角ハイフンなし）' => ['１２３４５６７', false],
+        ];
+    }
+
+    /**
      * 郵便番号のエラーメッセージ テスト
      *
      * @dataProvider providerZipCodeMessage
-     * @param string $hiragana
-     * @param sting $locale
-     * @param sting $expect
+     * @param string $zipCode
+     * @param string $locale
+     * @param string $expect
      */
     public function test_郵便番号_メッセージ($zipCode, $locale, $expect)
     {
         App::setLocale($locale);
 
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $zipCode,
             ],
@@ -497,7 +535,7 @@ class ValiiValidatorTest extends TestCase
      */
     public function test_バイト数($text, $expect)
     {
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $text,
             ],
@@ -531,15 +569,15 @@ class ValiiValidatorTest extends TestCase
      * マルチバイト対応のバイト数 テスト
      *
      * @dataProvider providerMaxByteMessage
-     * @param string $hiragana
-     * @param sting $locale
-     * @param sting $expect
+     * @param string $text
+     * @param string $locale
+     * @param string $expect
      */
     public function test_バイト数_メッセージ($text, $locale, $expect)
     {
         App::setLocale($locale);
 
-        $validator = \Validator::make(
+        $validator = Validator::make(
             [
                 'name' => $text,
             ],
