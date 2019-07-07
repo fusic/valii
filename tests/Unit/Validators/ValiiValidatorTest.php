@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Unit\Validators;
 
+use App;
 use Valii\Validators\ValiiValidator;
 use Tests\TestCase;
 
@@ -10,165 +11,29 @@ use Tests\TestCase;
  */
 class ValiiValidatorTest extends TestCase
 {
+    # --------------------------------------------------------------
+    # katakana
+
     /**
      * 全角カタカナのテスト
      *
      * @dataProvider providerKatakana
-     * @param $katakana string テストデータ
-     * @param mixed $expect
+     * @param string $katakana
+     * @param bool $expect
+     * @param sting $message
      */
-    public function test_全角カタカナチェック($katakana, $expect)
+    public function test_全角カタカナ($katakana, $expect)
     {
-        $rule = [
-            'name' => [
-              'katakana'
+        $validator = \Validator::make(
+            [
+                'name' => $katakana,
+            ],
+            [
+                'name' => 'katakana',
             ]
-        ];
-        $dataList = [];
-        $dataList['name'] = $katakana;
+        );
 
-        $trans = $this->getTranslator();
-        $validator = new ValiiValidator($trans, $dataList, $rule);
-        $result = $validator->passes();
-        $this->assertEquals($expect, $result);
-    }
-
-    /**
-     * 半角ｶﾀｶﾅのテスト
-     *
-     * @dataProvider providerHankakuKatakana
-     * @param $katakana string テストデータ
-     * @param mixed $expect
-     */
-    public function test_半角ｶﾀｶﾅチェック($katakana, $expect)
-    {
-        $rule = [
-            'name' => [
-              'hankaku_katakana'
-            ]
-        ];
-        $dataList = [];
-        $dataList['name'] = $katakana;
-
-        $trans = $this->getTranslator();
-        $validator = new ValiiValidator($trans, $dataList, $rule);
-        $result = $validator->passes();
-        $this->assertEquals($expect, $result);
-    }
-
-    /**
-     * ひらがなのテスト
-     *
-     * @dataProvider providerHiragana
-     * @param $hiragana string テストデータ
-     * @param mixed $expect
-     */
-    public function test_ひらがなチェック($hiragana, $expect)
-    {
-        $rule = [
-            'name' => [
-              'hiragana'
-            ]
-        ];
-        $dataList = [];
-        $dataList['name'] = $hiragana;
-
-        $trans = $this->getTranslator();
-        $validator = new ValiiValidator($trans, $dataList, $rule);
-        $result = $validator->passes();
-        $this->assertEquals($expect, $result);
-    }
-
-    /**
-     * 電話番号のテスト
-     *
-     * @dataProvider providerTel
-     * @param $tel string テストデータ
-     * @param mixed $expect
-     */
-    public function test_電話番号チェック($tel, $expect)
-    {
-        $rule = [
-            'name' => [
-              'tel'
-            ]
-        ];
-        $dataList = [];
-        $dataList['name'] = $tel;
-
-        $trans = $this->getTranslator();
-        $validator = new ValiiValidator($trans, $dataList, $rule);
-        $result = $validator->passes();
-        $this->assertEquals($expect, $result);
-    }
-
-    /**
-     * 全角のテスト
-     *
-     * @dataProvider providerZenkaku
-     * @param $zenkaku string テストデータ
-     * @param mixed $expect
-     */
-    public function test_全角チェック($zenkaku, $expect)
-    {
-        $rule = [
-            'name' => [
-              'zenkaku'
-            ]
-        ];
-        $dataList = [];
-        $dataList['name'] = $zenkaku;
-
-        $trans = $this->getTranslator();
-        $validator = new ValiiValidator($trans, $dataList, $rule);
-        $result = $validator->passes();
-        $this->assertEquals($expect, $result);
-    }
-
-    /**
-     * 郵便番号のテスト
-     *
-     * @dataProvider providerZipCode
-     * @param $zipCode string テストデータ
-     * @param mixed $expect
-     */
-    public function test_郵便番号チェック($zipCode, $expect)
-    {
-        $rule = [
-            'name' => [
-              'zip_code'
-            ]
-        ];
-        $dataList = [];
-        $dataList['name'] = $zipCode;
-
-        $trans = $this->getTranslator();
-        $validator = new ValiiValidator($trans, $dataList, $rule);
-        $result = $validator->passes();
-        $this->assertEquals($expect, $result);
-    }
-
-    /**
-     * マルチバイト対応のバイト数のテスト
-     *
-     * @dataProvider providerMaxByte
-     * @param $text string テストデータ
-     * @param mixed $expect
-     */
-    public function test_バイト数チェック($text, $expect)
-    {
-        $rule = [
-            'memo' => [
-                'max_byte:10'
-            ]
-        ];
-        $dataList = [];
-        $dataList['memo'] = $text;
-
-        $trans = $this->getTranslator();
-        $validator = new ValiiValidator($trans, $dataList, $rule);
-        $result = $validator->passes();
-        $this->assertEquals($expect, $result);
+        $this->assertEquals($expect, $validator->passes());
     }
 
     /**
@@ -180,10 +45,73 @@ class ValiiValidatorTest extends TestCase
     {
         return [
             '全角カタカナ' => ['サンプル', true],
-            '全角ひらがな' => ['さんぷる', false],
+            '全角ひらがな_en' => ['さんぷる', false],
+            '全角ひらがな_ja' => ['さんぷる', false],
             '半角ｶﾀｶﾅ' => ['ｻﾝﾌﾟﾙ', false],
             '半角英数' => ['abcd1234', false],
         ];
+    }
+
+    /**
+     * 全角カタカナのエラーメッセージ テスト
+     *
+     * @dataProvider providerKatakanaMessage
+     * @param string $katakana
+     * @param sting $locale
+     * @param sting $expect
+     */
+    public function test_全角カタカナ_メッセージ($katakana, $locale, $expect)
+    {
+        App::setLocale($locale);
+
+        $validator = \Validator::make(
+            [
+                'name' => $katakana,
+            ],
+            [
+                'name' => 'katakana',
+            ]
+        );
+
+        $errorMessage = $validator->errors()->get('name')[0];
+        $this->assertEquals($expect, $errorMessage);
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerKatakanaMessage(): array
+    {
+        return [
+            'en' => ['さんぷる', 'en', 'The name must be Katakana.'],
+            'ja' => ['さんぷる', 'ja', 'nameはカタカナのみにしてください。'],
+        ];
+    }
+
+    # --------------------------------------------------------------
+    # hankaku_katakana
+
+    /**
+     * 半角ｶﾀｶﾅのテスト
+     *
+     * @dataProvider providerHankakuKatakana
+     * @param $katakana string テストデータ
+     * @param bool $expect
+     */
+    public function test_半角ｶﾀｶﾅ($katakana, $expect)
+    {
+        $validator = \Validator::make(
+            [
+                'name' => $katakana,
+            ],
+            [
+                'name' => 'hankaku_katakana',
+            ]
+        );
+
+        $this->assertEquals($expect, $validator->passes());
     }
 
     /**
@@ -202,6 +130,68 @@ class ValiiValidatorTest extends TestCase
     }
 
     /**
+     * 半角ｶﾀｶﾅのエラーメッセージ テスト
+     *
+     * @dataProvider providerHankakuKatakanaMessage
+     * @param string $katakana
+     * @param sting $locale
+     * @param sting $expect
+     */
+    public function test_半角ｶﾀｶﾅ_メッセージ($katakana, $locale, $expect)
+    {
+        App::setLocale($locale);
+
+        $validator = \Validator::make(
+            [
+                'name' => $katakana,
+            ],
+            [
+                'name' => 'hankaku_katakana',
+            ]
+        );
+
+        $errorMessage = $validator->errors()->get('name')[0];
+        $this->assertEquals($expect, $errorMessage);
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerHankakuKatakanaMessage(): array
+    {
+        return [
+            'en' => ['さんぷる', 'en', 'The name must be half-width Katakana.'],
+            'ja' => ['さんぷる', 'ja', 'nameは半角カタカナのみにしてください。'],
+        ];
+    }
+
+    # --------------------------------------------------------------
+    # hiragana
+
+    /**
+     * ひらがなのテスト
+     *
+     * @dataProvider providerHiragana
+     * @param $hiragana string テストデータ
+     * @param bool $expect
+     */
+    public function test_ひらがな($hiragana, $expect)
+    {
+        $validator = \Validator::make(
+            [
+                'name' => $hiragana,
+            ],
+            [
+                'name' => 'hiragana',
+            ]
+        );
+
+        $this->assertEquals($expect, $validator->passes());
+    }
+
+    /**
      * テストデータ
      *
      * @return array
@@ -214,6 +204,150 @@ class ValiiValidatorTest extends TestCase
             'ひらがな以外混じり' => ['さんぷる情報', false],
             '半角英数' => ['abcd1234', false]
         ];
+    }
+
+    /**
+     * ひらがなのエラーメッセージ テスト
+     *
+     * @dataProvider providerHiraganaMessage
+     * @param string $hiragana
+     * @param sting $locale
+     * @param sting $expect
+     */
+    public function test_ひらがな_メッセージ($hiragana, $locale, $expect)
+    {
+        App::setLocale($locale);
+
+        $validator = \Validator::make(
+            [
+                'name' => $hiragana,
+            ],
+            [
+                'name' => 'hiragana',
+            ]
+        );
+
+        $errorMessage = $validator->errors()->get('name')[0];
+        $this->assertEquals($expect, $errorMessage);
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerHiraganaMessage(): array
+    {
+        return [
+            'en' => ['ダミー情報', 'en', 'The name must be Hiragana.'],
+            'ja' => ['ダミー情報', 'ja', 'nameはひらがなのみにしてください。'],
+        ];
+    }
+
+    # --------------------------------------------------------------
+    # zenkaku
+
+    /**
+     * 全角のテスト
+     *
+     * @dataProvider providerZenkaku
+     * @param $zenkaku string テストデータ
+     * @param bool $expect
+     */
+    public function test_全角($zenkaku, $expect)
+    {
+        $validator = \Validator::make(
+            [
+                'name' => $zenkaku,
+            ],
+            [
+                'name' => 'zenkaku',
+            ]
+        );
+
+        $this->assertEquals($expect, $validator->passes());
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerZenkaku(): array
+    {
+        return [
+            '全角ひらがな' => ['さんぷる', true],
+            '全角カタカナ' => ['サンプル', true],
+            '全角数字' => ['０１２３', true],
+            '全角英字' => ['ＡＢＣＤ', true],
+            '全角漢字' => ['情報', true],
+            '半角ｶﾀｶﾅ' => ['ｻﾝﾌﾟﾙ', false],
+            '半角数字' => ['1234', false],
+            '半角英字' => ['abcd', false],
+            '全角半角混じり' => ['さんぷるｻﾝﾌﾟﾙ', false]
+        ];
+    }
+
+    /**
+     * 全角のエラーメッセージ テスト
+     *
+     * @dataProvider providerZenkakuMessage
+     * @param string $hiragana
+     * @param sting $locale
+     * @param sting $expect
+     */
+    public function test_全角_メッセージ($zenkaku, $locale, $expect)
+    {
+        App::setLocale($locale);
+
+        $validator = \Validator::make(
+            [
+                'name' => $zenkaku,
+            ],
+            [
+                'name' => 'zenkaku',
+            ]
+        );
+
+        $errorMessage = $validator->errors()->get('name')[0];
+        $this->assertEquals($expect, $errorMessage);
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerZenkakuMessage(): array
+    {
+        return [
+            'en' => ['ｻﾝﾌﾟﾙ', 'en', 'The name must be full-width character.'],
+            'ja' => ['ｻﾝﾌﾟﾙ', 'ja', 'nameは全角のみにしてください。'],
+        ];
+    }
+
+    # --------------------------------------------------------------
+    # tel
+
+    /**
+     * 電話番号のテスト
+     *
+     * @dataProvider providerTel
+     * @param $tel string テストデータ
+     * @param bool $expect
+     */
+    public function test_電話番号($tel, $expect)
+    {
+        $validator = \Validator::make(
+            [
+                'name' => $tel,
+            ],
+            [
+                'name' => 'tel',
+            ]
+        );
+
+        $this->assertEquals($expect, $validator->passes());
     }
 
     /**
@@ -235,24 +369,65 @@ class ValiiValidatorTest extends TestCase
     }
 
     /**
+     * 電話番号のエラーメッセージ テスト
+     *
+     * @dataProvider providerTelMessage
+     * @param string $hiragana
+     * @param sting $locale
+     * @param sting $expect
+     */
+    public function test_電話番号_メッセージ($tel, $locale, $expect)
+    {
+        App::setLocale($locale);
+
+        $validator = \Validator::make(
+            [
+                'name' => $tel,
+            ],
+            [
+                'name' => 'tel',
+            ]
+        );
+
+        $errorMessage = $validator->errors()->get('name')[0];
+        $this->assertEquals($expect, $errorMessage);
+    }
+
+    /**
      * テストデータ
      *
      * @return array
      */
-    public function providerZenkaku(): array
+    public function providerTelMessage(): array
     {
         return [
-            '全角ひらがな' => ['さんぷる', true],
-            '全角カタカナ' => ['サンプル', true],
-            '全角数字' => ['０１２３', true],
-            '全角英字' => ['ＡＢＣＤ', true],
-            '全角漢字' => ['情報', true],
-
-            '半角ｶﾀｶﾅ' => ['ｻﾝﾌﾟﾙ', false],
-            '半角数字' => ['1234', false],
-            '半角英字' => ['abcd', false],
-            '全角半角混じり' => ['さんぷるｻﾝﾌﾟﾙ', false]
+            'en' => ['092(737)2616', 'en', 'The name is not a valid phone number.'],
+            'ja' => ['092(737)2616', 'ja', 'nameは電話番号の書式にしてください。'],
         ];
+    }
+
+    # --------------------------------------------------------------
+    # zip_code
+
+    /**
+     * 郵便番号のテスト
+     *
+     * @dataProvider providerZipCode
+     * @param $zipCode string テストデータ
+     * @param bool $expect
+     */
+    public function test_郵便番号($zipCode, $expect)
+    {
+        $validator = \Validator::make(
+            [
+                'name' => $zipCode,
+            ],
+            [
+                'name' => 'zip_code',
+            ]
+        );
+
+        $this->assertEquals($expect, $validator->passes());
     }
 
     /**
@@ -273,6 +448,68 @@ class ValiiValidatorTest extends TestCase
     }
 
     /**
+     * 郵便番号のエラーメッセージ テスト
+     *
+     * @dataProvider providerZipCodeMessage
+     * @param string $hiragana
+     * @param sting $locale
+     * @param sting $expect
+     */
+    public function test_郵便番号_メッセージ($zipCode, $locale, $expect)
+    {
+        App::setLocale($locale);
+
+        $validator = \Validator::make(
+            [
+                'name' => $zipCode,
+            ],
+            [
+                'name' => 'zip_code',
+            ]
+        );
+
+        $errorMessage = $validator->errors()->get('name')[0];
+        $this->assertEquals($expect, $errorMessage);
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerZipCodeMessage(): array
+    {
+        return [
+            'en' => ['12345678', 'en', 'The name is not a valid ZIP Code.'],
+            'ja' => ['12345678', 'ja', 'nameは郵便番号の書式にしてください。'],
+        ];
+    }
+
+    # --------------------------------------------------------------
+    # max_byte
+
+    /**
+     * マルチバイト対応のバイト数のテスト
+     *
+     * @dataProvider providerMaxByte
+     * @param $text string テストデータ
+     * @param bool $expect
+     */
+    public function test_バイト数($text, $expect)
+    {
+        $validator = \Validator::make(
+            [
+                'name' => $text,
+            ],
+            [
+                'name' => 'max_byte:10',
+            ]
+        );
+
+        $this->assertEquals($expect, $validator->passes());
+    }
+
+    /**
      * テストデータ
      *
      * @return array
@@ -289,4 +526,43 @@ class ValiiValidatorTest extends TestCase
             '半角全角11バイト' => ['１２３４123', false],
         ];
     }
+
+    /**
+     * マルチバイト対応のバイト数 テスト
+     *
+     * @dataProvider providerMaxByteMessage
+     * @param string $hiragana
+     * @param sting $locale
+     * @param sting $expect
+     */
+    public function test_バイト数_メッセージ($text, $locale, $expect)
+    {
+        App::setLocale($locale);
+
+        $validator = \Validator::make(
+            [
+                'name' => $text,
+            ],
+            [
+                'name' => 'max_byte:10',
+            ]
+        );
+
+        $errorMessage = $validator->errors()->get('name')[0];
+        $this->assertEquals($expect, $errorMessage);
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerMaxByteMessage(): array
+    {
+        return [
+            'en' => ['12345678901', 'en', 'The name may not be greater than 10 bytes.'],
+            'ja' => ['12345678901', 'ja', 'nameは10バイト以下にしてください。'],
+        ];
+    }
+
 }

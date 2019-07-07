@@ -3,14 +3,21 @@ namespace Tests;
 
 use Illuminate\Translation\ArrayLoader;
 use Illuminate\Translation\Translator;
-use PHPUnit\Framework\TestCase as BaseTestCase;
+use Orchestra\Testbench\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
 {
-    protected function getTranslator()
+    /**
+     * Get package providers.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
     {
-        return new Translator(
-            new ArrayLoader, 'en'
-        );
+        return [
+            'Valii\Providers\ValidatorServiceProvider'
+        ];
     }
 }

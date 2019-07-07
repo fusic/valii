@@ -13,11 +13,11 @@ return [
     |
     */
 
-    'tel' => ':attributeは電話番号の書式にしてください。',
-    'hiragana' => ':attributeはひらがなのみにしてください。',
-    'hankaku_katakana' => ':attributeは半角カタカナのみにしてください。',
-    'zip_code' => ':attributeは郵便番号の書式にしてください。',
-    'zenkaku' => ':attributeは全角のみにしてください。',
     'katakana' => ':attributeはカタカナのみにしてください。',
-    'max_byte' => ':attributeは、:max_byteバイト以下にしてください。',
+    'hankaku_katakana' => ':attributeは半角カタカナのみにしてください。',
+    'hiragana' => ':attributeはひらがなのみにしてください。',
+    'zenkaku' => ':attributeは全角のみにしてください。',
+    'tel' => ':attributeは電話番号の書式にしてください。',
+    'zip_code' => ':attributeは郵便番号の書式にしてください。',
+    'max_byte' => ':attributeは:max_byteバイト以下にしてください。',
 ];
