@@ -20,7 +20,7 @@ class ValiiValidator extends Validator
     public function replaceBefore($message, $attribute, $rule, $parameters)
     {
         $defaultValidationDate = trans('validation.date');
-        if (is_array($defaultValidationDates)) {
+        if (is_array($defaultValidationDate)) {
             $parameter_translated = str_replace(
                 array_keys($defaultValidationDate),
                 array_values($defaultValidationDate),
@@ -30,7 +30,7 @@ class ValiiValidator extends Validator
         }
 
         $valiiDate = trans('valii::validation.date');
-        if (is_array($defaultValidationDates)) {
+        if (is_array($valiiDate)) {
             $parameter_translated = str_replace(
                 array_keys($valiiDate),
                 array_values($valiiDate),
