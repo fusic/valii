@@ -20,4 +20,9 @@ return [
     'zenkaku' => ':attributeは全角のみにしてください。',
     'katakana' => ':attributeはカタカナのみにしてください。',
     'max_byte' => ':attributeは、:max_byteバイト以下にしてください。',
+    'date' => [
+        'yesterday' => '昨日',
+        'tomorrow' => '明日',
+        'today' => '今日'
+    ]
 ];
