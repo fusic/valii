@@ -13,11 +13,11 @@ return [
     |
     */
 
-    'tel' => 'The :attribute is not a valid phone number.',
-    'hiragana' => 'The :attribute must be Hiragana.',
-    'hankaku_katakana' => 'The :attribute must be half-width Katakana.',
-    'zip_code' => 'The :attribute is not a valid ZIP Code.',
-    'zenkaku' => 'The :attribute must be full-width character.',
     'katakana' => 'The :attribute must be Katakana.',
-    'max_byte' => 'The :attribute may not be greater than :max_byte bytes.'
+    'hankaku_katakana' => 'The :attribute must be half-width Katakana.',
+    'hiragana' => 'The :attribute must be Hiragana.',
+    'zenkaku' => 'The :attribute must be full-width character.',
+    'tel' => 'The :attribute is not a valid phone number.',
+    'zip_code' => 'The :attribute is not a valid ZIP Code.',
+    'max_byte' => 'The :attribute may not be greater than :max_byte bytes.',
 ];

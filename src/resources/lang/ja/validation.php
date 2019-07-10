@@ -13,16 +13,18 @@ return [
     |
     */
 
-    'tel' => ':attributeは電話番号の書式にしてください。',
-    'hiragana' => ':attributeはひらがなのみにしてください。',
+    'katakana' => ':attributeはカタカナのみにしてください。',
     'hankaku_katakana' => ':attributeは半角カタカナのみにしてください。',
-    'zip_code' => ':attributeは郵便番号の書式にしてください。',
+    'hiragana' => ':attributeはひらがなのみにしてください。',
     'zenkaku' => ':attributeは全角のみにしてください。',
     'katakana' => ':attributeはカタカナのみにしてください。',
     'max_byte' => ':attributeは、:max_byteバイト以下にしてください。',
+    'tel' => ':attributeは電話番号の書式にしてください。',
+    'zip_code' => ':attributeは郵便番号の書式にしてください。',
+    'max_byte' => ':attributeは:max_byteバイト以下にしてください。',
     'date' => [
         'yesterday' => '昨日',
         'tomorrow' => '明日',
-        'today' => '今日'
-    ]
+        'today' => '今日',
+    ],
 ];
