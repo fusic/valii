@@ -19,22 +19,26 @@ class ValiiValidator extends Validator
      */
     public function replaceBefore($message, $attribute, $rule, $parameters)
     {
-        $defaultValidationDates = trans('validation.date');
+        $defaultValidationDate = trans('validation.date');
         if (is_array($defaultValidationDates)) {
             $parameter_translated = str_replace(
-                array_keys($defaultValidationDates),
-                array_values($defaultValidationDates),
+                array_keys($defaultValidationDate),
+                array_values($defaultValidationDate),
                 $parameters[0]
             );
             $message = str_replace(':date', $parameter_translated, $message);
         }
 
-        $parameter_translated = str_replace(
-            array_keys(trans('valii::validation.date')),
-            array_values(trans('valii::validation.date')),
-            $parameters[0]
-        );
-        return parent::replaceBefore(str_replace(':date', $parameter_translated, $message), $attribute, $rule, $parameters);
+        $valiiDate = trans('valii::validation.date');
+        if (is_array($defaultValidationDates)) {
+            $parameter_translated = str_replace(
+                array_keys($valiiDate),
+                array_values($valiiDate),
+                $parameters[0]
+            );
+            $message = str_replace(':date', $parameter_translated, $message);
+        }
+        return parent::replaceBefore($message, $attribute, $rule, $parameters);
     }
 
     /**
