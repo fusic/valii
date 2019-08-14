@@ -6,6 +6,41 @@ use Illuminate\Validation\Validator;
 
 class ValiiValidator extends Validator
 {
+
+    /**
+     * over load replace before
+     * replace :date place holder
+     * 
+     * @param  string  $message
+     * @param  string  $attribute
+     * @param  string  $rule
+     * @param  array   $parameters
+     * @return string
+     */
+    public function replaceBefore($message, $attribute, $rule, $parameters)
+    {
+        $defaultValidationDate = trans('validation.date');
+        if (is_array($defaultValidationDate)) {
+            $parameter_translated = str_replace(
+                array_keys($defaultValidationDate),
+                array_values($defaultValidationDate),
+                $parameters[0]
+            );
+            $message = str_replace(':date', $parameter_translated, $message);
+        }
+
+        $valiiDate = trans('valii::validation.date');
+        if (is_array($valiiDate)) {
+            $parameter_translated = str_replace(
+                array_keys($valiiDate),
+                array_values($valiiDate),
+                $parameters[0]
+            );
+            $message = str_replace(':date', $parameter_translated, $message);
+        }
+        return parent::replaceBefore($message, $attribute, $rule, $parameters);
+    }
+
     /**
      * validation tel number
      *

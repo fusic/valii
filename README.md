@@ -43,3 +43,16 @@ public function rules()
         ];
     }
 ```
+
+## Validation Place Holder
+
+validation.php
+```
+
+return [
+    ・・・
+    'date' => [
+        'today' => '本日',
+    ]
+];
+```
