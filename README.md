@@ -44,15 +44,8 @@ public function rules()
     }
 ```
 
-## Validation Place Holder
+## Custom Validation Message
 
-validation.php
 ```
-
-return [
-    ・・・
-    'date' => [
-        'today' => '本日',
-    ]
-];
+php artisan vendor:publish
 ```

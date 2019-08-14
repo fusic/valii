@@ -11,7 +11,11 @@ class ValidatorServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'valii');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'valii');
+
+        $this->publishes([
+            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/valii'),
+        ]);
 
         Validator::resolver(function($translator, $data, $rules, $messages, $attributes) {
             // バリデーションメッセージを取得
