@@ -183,4 +183,26 @@ class ValiiValidator extends Validator
     {
         return str_replace(':max_byte', $parameters[0], $message);
     }
+
+    /**
+     * validation email_cakephp
+     *
+     * email validate by CakePHP regex
+     *
+     * @SuppressWarnings("unused")
+     *
+     * @param  string $attribute
+     * @param  mixed  $value
+     * @param  mixed  $parameters
+     * @return bool
+     */
+    public function validateEmailCake(string $attribute, $value, array $parameters): bool
+    {
+        $regex = '/^[\p{L}0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[\p{L}0-9!#$%&\'*+\/=?^_`{|}~-]+)*@'
+        . '(?:[_\p{L}0-9][-_\p{L}0-9]*\.)*(?:[\p{L}0-9][-\p{L}0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})'
+        . '$/ui';
+
+        return preg_match($regex, $value);
+    }
+
 }

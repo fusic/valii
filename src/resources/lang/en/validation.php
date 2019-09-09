@@ -20,4 +20,5 @@ return [
     'tel' => 'The :attribute is not a valid phone number.',
     'zip_code' => 'The :attribute is not a valid ZIP Code.',
     'max_byte' => 'The :attribute may not be greater than :max_byte bytes.',
+    'email_cake' => 'The :attribute must be a valid email address.',
 ];
