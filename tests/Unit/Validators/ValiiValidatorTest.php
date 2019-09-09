@@ -48,6 +48,47 @@ class ValiiValidatorTest extends TestCase
             '全角ひらがな_ja' => ['さんぷる', false],
             '半角ｶﾀｶﾅ' => ['ｻﾝﾌﾟﾙ', false],
             '半角英数' => ['abcd1234', false],
+            '半角スペースあり' => ['サン プル', false],
+            '全角スペースあり' => ['サン　プル', false],
+        ];
+    }
+
+    /**
+     * 全角カタカナのテスト_スペースあり
+     *
+     * @dataProvider providerKatakanaWithSpaces
+     * @param string $katakana
+     * @param bool $expect
+     */
+    public function test_全角カタカナ_スペースあり($katakana, $expect)
+    {
+        $validator = Validator::make(
+            [
+                'name' => $katakana,
+            ],
+            [
+                'name' => 'katakana:allow_spaces',
+            ]
+        );
+
+        $this->assertEquals($expect, $validator->passes());
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerKatakanaWithSpaces(): array
+    {
+        return [
+            '全角カタカナ' => ['サンプル', true],
+            '全角ひらがな_en' => ['さんぷる', false],
+            '全角ひらがな_ja' => ['さんぷる', false],
+            '半角ｶﾀｶﾅ' => ['ｻﾝﾌﾟﾙ', false],
+            '半角英数' => ['abcd1234', false],
+            '半角スペースあり' => ['サン プル', true],
+            '全角スペースあり' => ['サン　プル', true],
         ];
     }
 
@@ -124,7 +165,47 @@ class ValiiValidatorTest extends TestCase
             '半角ｶﾀｶﾅのみ' => ['ｻﾝﾌﾟﾙ', true],
             '全角カタカナのみ' => ['サンプル', false],
             '全角半角カタカナ' => ['サンﾌﾟﾙ', false],
-            '半角英数' => ['abcd1234', false]
+            '半角英数' => ['abcd1234', false],
+            '半角スペースあり' => ['ｻﾝ ﾌﾟﾙ', false],
+            '全角スペースあり' => ['ｻﾝ　ﾌﾟﾙ', false],
+        ];
+    }
+
+    /**
+     * 半角ｶﾀｶﾅのテスト_スペースあり
+     *
+     * @dataProvider providerHankakuKatakanaWithSpaces
+     * @param $katakana string テストデータ
+     * @param bool $expect
+     */
+    public function test_半角ｶﾀｶﾅ_スペースあり($katakana, $expect)
+    {
+        $validator = Validator::make(
+            [
+                'name' => $katakana,
+            ],
+            [
+                'name' => 'hankaku_katakana:allow_spaces',
+            ]
+        );
+
+        $this->assertEquals($expect, $validator->passes());
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerHankakuKatakanaWithSpaces(): array
+    {
+        return [
+            '半角ｶﾀｶﾅのみ' => ['ｻﾝﾌﾟﾙ', true],
+            '全角カタカナのみ' => ['サンプル', false],
+            '全角半角カタカナ' => ['サンﾌﾟﾙ', false],
+            '半角英数' => ['abcd1234', false],
+            '半角スペースあり' => ['ｻﾝ ﾌﾟﾙ', true],
+            '全角スペースあり' => ['ｻﾝ　ﾌﾟﾙ', false],
         ];
     }
 
@@ -201,7 +282,47 @@ class ValiiValidatorTest extends TestCase
             'ひらがなのみ' => ['さんぷる', true],
             'ひらがな以外' => ['ダミー情報', false],
             'ひらがな以外混じり' => ['さんぷる情報', false],
-            '半角英数' => ['abcd1234', false]
+            '半角英数' => ['abcd1234', false],
+            '半角スペースあり' => ['さん ぷる', false],
+            '全角スペースあり' => ['さん　ぷる', false],
+        ];
+    }
+
+    /**
+     * ひらがなのテスト_スペースあり
+     *
+     * @dataProvider providerHiraganaWithSpaces
+     * @param $hiragana string テストデータ
+     * @param bool $expect
+     */
+    public function test_ひらがな_スペースあり($hiragana, $expect)
+    {
+        $validator = Validator::make(
+            [
+                'name' => $hiragana,
+            ],
+            [
+                'name' => 'hiragana:allow_spaces',
+            ]
+        );
+
+        $this->assertEquals($expect, $validator->passes());
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerHiraganaWithSpaces(): array
+    {
+        return [
+            'ひらがなのみ' => ['さんぷる', true],
+            'ひらがな以外' => ['ダミー情報', false],
+            'ひらがな以外混じり' => ['さんぷる情報', false],
+            '半角英数' => ['abcd1234', false],
+            '半角スペースあり' => ['さん ぷる', true],
+            '全角スペースあり' => ['さん　ぷる', true],
         ];
     }
 

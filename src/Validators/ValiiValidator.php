@@ -61,6 +61,12 @@ class ValiiValidator extends Validator
     public function validateHankakuKatakana(string $attribute, $value, array $parameters): bool
     {
         $regex = '/^(?:\xEF\xBD[\xA6-\xBF]|\xEF\xBE[\x80-\x9F])*$/';
+
+        // in allow_spaces mode
+        if (isset($parameters[0]) && $parameters[0] == 'allow_spaces') {
+            $regex = '/^(?:\xEF\xBD[\xA6-\xBF]|\xEF\xBE[\x80-\x9F]|[ ])*$/';
+        }
+
         return preg_match($regex, $value);
     }
 
@@ -77,6 +83,12 @@ class ValiiValidator extends Validator
     public function validateHiragana(string $attribute, $value, array $parameters): bool
     {
         $regex = '/^(\xe3(\x81[\x81-\xbf]|\x82[\x80-\x93]|\x83\xbc))*$/';
+
+        // in allow_spaces mode
+        if (isset($parameters[0]) && $parameters[0] == 'allow_spaces') {
+            $regex = '/^(\xe3(\x81[\x81-\xbf]|\x82[\x80-\x93]|\x83\xbc)|[　 ])*$/';
+        }
+
         return preg_match($regex, $value);
     }
 
@@ -93,6 +105,12 @@ class ValiiValidator extends Validator
     public function validateKatakana(string $attribute, $value, array $parameters): bool
     {
         $regex = '/^(\xe3(\x82[\xa1-\xbf]|\x83[\x80-\xb6]|\x83\xbc|\x82\x9b|\x82\x9c))*$/';
+
+        // in allow_spaces mode
+        if (isset($parameters[0]) && $parameters[0] == 'allow_spaces') {
+            $regex = '/^(\xe3(\x82[\xa1-\xbf]|\x83[\x80-\xb6]|\x83\xbc|\x82\x9b|\x82\x9c)|[　 ])*$/';
+        }
+
         return preg_match($regex, $value);
     }
 
@@ -109,6 +127,7 @@ class ValiiValidator extends Validator
     public function validateZenkaku(string $attribute, $value, array $parameters): bool
     {
         $regex = '/(?:\xEF\xBD[\xA1-\xBF]|\xEF\xBE[\x80-\x9F])|[\x20-\x7E]/';
+
         return !preg_match($regex, $value);
     }
 
