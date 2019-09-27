@@ -732,23 +732,23 @@ class ValiiValidatorTest extends TestCase
     }
 
     # --------------------------------------------------------------
-    # mail_cake
+    # valii_email
 
     /**
-     * メールのテスト_CakePHPのルール.ver
+     * メールアドレスのテスト.ver
      *
      * @dataProvider providerEmail
      * @param $text string テストデータ
      * @param bool $expect
      */
-    public function test_メール_CakePHP($text, $expect)
+    public function test_メールアドレス($text, $expect)
     {
         $validator = Validator::make(
             [
                 'mail' => $text,
             ],
             [
-                'mail' => 'email_cake',
+                'mail' => 'valii_email',
             ]
         );
 
@@ -780,14 +780,14 @@ class ValiiValidatorTest extends TestCase
     }
 
     /**
-     * メールのテスト_CakePHPのルール メッセージ テスト
+     * メールアドレスのテスト メッセージ テスト
      *
      * @dataProvider providerEmailMessage
      * @param string $text
      * @param string $locale
      * @param string $expect
      */
-    public function test_メール_CakePHP_メッセージ($text, $locale, $expect)
+    public function test_メールアドレス_メッセージ($text, $locale, $expect)
     {
         App::setLocale($locale);
 
@@ -796,7 +796,7 @@ class ValiiValidatorTest extends TestCase
                 'mail' => $text,
             ],
             [
-                'mail' => 'email_cake',
+                'mail' => 'valii_email',
             ]
         );
 

@@ -185,9 +185,9 @@ class ValiiValidator extends Validator
     }
 
     /**
-     * validation email_cakephp
+     * validation valii_email
      *
-     * email validate by CakePHP regex
+     * email validate refer to CakePHP regex
      *
      * @SuppressWarnings("unused")
      *
@@ -196,13 +196,13 @@ class ValiiValidator extends Validator
      * @param  mixed  $parameters
      * @return bool
      */
-    public function validateEmailCake(string $attribute, $value, array $parameters): bool
+    public function validateValiiEmail(string $attribute, $value, array $parameters): bool
     {
         $regex = '/^[\p{L}0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[\p{L}0-9!#$%&\'*+\/=?^_`{|}~-]+)*@'
         . '(?:[_\p{L}0-9][-_\p{L}0-9]*\.)*(?:[\p{L}0-9][-\p{L}0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})'
         . '$/ui';
 
-        return preg_match($regex, $value);
+        return (bool)preg_match($regex, $value);
     }
 
 }
