@@ -764,7 +764,7 @@ class ValiiValidatorTest extends TestCase
     {
         return [
             '通常' => ['example@example.com', true],
-            '記号含む' => ['fusicadmin+115@example.com', true],
+            '記号含む' => ['example+115@example.com', true],
             '先頭スペース_半角' => [' example@example.com', false],
             '末尾スペース_半角' => ['example@example.com ', false],
             '先頭スペース_全角' => ['　example@example.com', false],
