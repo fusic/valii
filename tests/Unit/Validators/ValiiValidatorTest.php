@@ -731,4 +731,90 @@ class ValiiValidatorTest extends TestCase
         ];
     }
 
+    # --------------------------------------------------------------
+    # valii_email
+
+    /**
+     * メールアドレスのテスト.ver
+     *
+     * @dataProvider providerEmail
+     * @param $text string テストデータ
+     * @param bool $expect
+     */
+    public function test_メールアドレス($text, $expect)
+    {
+        $validator = Validator::make(
+            [
+                'mail' => $text,
+            ],
+            [
+                'mail' => 'valii_email',
+            ]
+        );
+
+        $this->assertEquals($expect, $validator->passes());
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerEmail(): array
+    {
+        return [
+            '通常' => ['example@example.com', true],
+            '記号含む' => ['example+115@example.com', true],
+            '先頭スペース_半角' => [' example@example.com', false],
+            '末尾スペース_半角' => ['example@example.com ', false],
+            '先頭スペース_全角' => ['　example@example.com', false],
+            '末尾スペース_全角' => ['example@example.com　', false],
+            '途中スペース_半角' => ['example @example.com', false],
+            '途中スペース_全角' => ['example@e　xample.com', false],
+            '@なし' => ['examplexample.com', false],
+            '全角' => ['ｅｘａｍｐｌｅ＠ｅｘａｍｐｌｅ．ｃｏｍm', false],
+            '先頭がドット' => ['.example@example.com', false],
+            '末尾がドット' => ['example@example.com.', false],
+            'ドットが連続' => ['example..@example.com', false],
+        ];
+    }
+
+    /**
+     * メールアドレスのテスト メッセージ テスト
+     *
+     * @dataProvider providerEmailMessage
+     * @param string $text
+     * @param string $locale
+     * @param string $expect
+     */
+    public function test_メールアドレス_メッセージ($text, $locale, $expect)
+    {
+        App::setLocale($locale);
+
+        $validator = Validator::make(
+            [
+                'mail' => $text,
+            ],
+            [
+                'mail' => 'valii_email',
+            ]
+        );
+
+        $errorMessage = $validator->errors()->get('mail')[0];
+        $this->assertEquals($expect, $errorMessage);
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public function providerEmailMessage(): array
+    {
+        return [
+            'en' => ['example..@example.com', 'en', 'The mail must be a valid email address.'],
+            'ja' => ['example..@example.com', 'ja', 'mailは、有効なメールアドレスにしてください。'],
+        ];
+    }
+
 }

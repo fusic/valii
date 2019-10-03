@@ -20,6 +20,7 @@ return [
     'tel' => ':attributeは電話番号の書式にしてください。',
     'zip_code' => ':attributeは郵便番号の書式にしてください。',
     'max_byte' => ':attributeは:max_byteバイト以下にしてください。',
+    'valii_email' => ':attributeは、有効なメールアドレスにしてください。',
     'date' => [
         'yesterday' => '昨日',
         'tomorrow' => '明日',
