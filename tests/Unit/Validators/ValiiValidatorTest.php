@@ -773,6 +773,8 @@ class ValiiValidatorTest extends TestCase
             '途中スペース_全角' => ['example@e　xample.com', false],
             '@なし' => ['examplexample.com', false],
             '全角' => ['ｅｘａｍｐｌｅ＠ｅｘａｍｐｌｅ．ｃｏｍm', false],
+            'ひらがな' => ['あexample@example.com', false],
+            '漢字' => ['example例@example.com', false],
             '先頭がドット' => ['.example@example.com', false],
             '末尾がドット' => ['example@example.com.', false],
             'ドットが連続' => ['example..@example.com', false],
