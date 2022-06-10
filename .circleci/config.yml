@@ -25,7 +25,7 @@ commands:
     steps:
       - checkout
       - run: php -v
-      - run: composer self-update
+      - run: sudo composer self-update
       - restore_cache:
           keys:
             - composer-v1-{{ checksum "composer.json" }}
