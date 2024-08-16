@@ -1,6 +1,9 @@
 version: 2.1
 
 executors:
+  php8_3:
+    docker:
+      - image: circleci/php:8.3
   php8_2:
     docker:
       - image: circleci/php:8.2
@@ -43,6 +46,14 @@ commands:
           file: ./coverage.xml
 
 jobs:
+  php83:
+    executor: php8_3
+    steps:
+      - composer_install
+  php82:
+    executor: php8_2
+    steps:
+      - composer_install
   php80:
     executor: php8_0
     steps:
@@ -67,6 +78,8 @@ jobs:
 workflows:
   test:
     jobs:
+      - php83
+      - php82
       - php80
       - php74
       - php73
