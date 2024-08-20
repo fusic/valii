@@ -40,7 +40,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerKatakana(): array
+    public static function providerKatakana(): array
     {
         return [
             '全角カタカナ' => ['サンプル', true],
@@ -79,7 +79,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerKatakanaWithSpaces(): array
+    public static function providerKatakanaWithSpaces(): array
     {
         return [
             '全角カタカナ' => ['サンプル', true],
@@ -122,7 +122,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerKatakanaMessage(): array
+    public static function providerKatakanaMessage(): array
     {
         return [
             'en' => ['さんぷる', 'en', 'The name must be Katakana.'],
@@ -159,7 +159,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerHankakuKatakana(): array
+    public static function providerHankakuKatakana(): array
     {
         return [
             '半角ｶﾀｶﾅのみ' => ['ｻﾝﾌﾟﾙ', true],
@@ -197,7 +197,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerHankakuKatakanaWithSpaces(): array
+    public static function providerHankakuKatakanaWithSpaces(): array
     {
         return [
             '半角ｶﾀｶﾅのみ' => ['ｻﾝﾌﾟﾙ', true],
@@ -239,7 +239,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerHankakuKatakanaMessage(): array
+    public static function providerHankakuKatakanaMessage(): array
     {
         return [
             'en' => ['さんぷる', 'en', 'The name must be half-width Katakana.'],
@@ -276,7 +276,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerHiragana(): array
+    public static function providerHiragana(): array
     {
         return [
             'ひらがなのみ' => ['さんぷる', true],
@@ -314,7 +314,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerHiraganaWithSpaces(): array
+    public static function providerHiraganaWithSpaces(): array
     {
         return [
             'ひらがなのみ' => ['さんぷる', true],
@@ -356,7 +356,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerHiraganaMessage(): array
+    public static function providerHiraganaMessage(): array
     {
         return [
             'en' => ['ダミー情報', 'en', 'The name must be Hiragana.'],
@@ -393,7 +393,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerZenkaku(): array
+    public static function providerZenkaku(): array
     {
         return [
             '全角ひらがな' => ['さんぷる', true],
@@ -438,7 +438,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerZenkakuMessage(): array
+    public static function providerZenkakuMessage(): array
     {
         return [
             'en' => ['ｻﾝﾌﾟﾙ', 'en', 'The name must be full-width character.'],
@@ -475,7 +475,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerTel(): array
+    public static function providerTel(): array
     {
         return [
             '電話番号(ハイフンあり)' => ['092-737-2616', true],
@@ -525,7 +525,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerTelMessage(): array
+    public static function providerTelMessage(): array
     {
         return [
             'en' => ['092(737)2616', 'en', 'The name is not a valid phone number.'],
@@ -562,7 +562,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerZipCode(): array
+    public static function providerZipCode(): array
     {
         return [
             '郵便番号' => ['123-4567', true],
@@ -600,7 +600,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerZipCodeStrict(): array
+    public static function providerZipCodeStrict(): array
     {
         return [
             '郵便番号' => ['123-4567', true],
@@ -643,7 +643,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerZipCodeMessage(): array
+    public static function providerZipCodeMessage(): array
     {
         return [
             'en' => ['12345678', 'en', 'The name is not a valid ZIP Code.'],
@@ -680,7 +680,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerMaxByte(): array
+    public static function providerMaxByte(): array
     {
         return [
             '0バイト' => ['', true],
@@ -723,7 +723,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerMaxByteMessage(): array
+    public static function providerMaxByteMessage(): array
     {
         return [
             'en' => ['12345678901', 'en', 'The name may not be greater than 10 bytes.'],
@@ -760,7 +760,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerEmail(): array
+    public static function providerEmail(): array
     {
         return [
             '通常' => ['example@example.com', true],
@@ -811,7 +811,7 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerEmailMessage(): array
+    public static function providerEmailMessage(): array
     {
         return [
             'en' => ['example..@example.com', 'en', 'The mail must be a valid email address.'],
