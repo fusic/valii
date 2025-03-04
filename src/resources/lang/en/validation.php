@@ -21,4 +21,5 @@ return [
     'zip_code' => 'The :attribute is not a valid ZIP Code.',
     'max_byte' => 'The :attribute may not be greater than :max_byte bytes.',
     'valii_email' => 'The :attribute must be a valid email address.',
+    'valii_emoji_and_symbol' => 'The :attribute must not contain emojis and symbols.',
 ];

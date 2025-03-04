@@ -819,4 +819,70 @@ class ValiiValidatorTest extends TestCase
         ];
     }
 
+    # --------------------------------------------------------------
+    # valii_emoji
+
+    /**
+     * 絵文字、特殊文字のテスト
+     *
+     * @dataProvider providerEmoji
+     */
+    public function test_絵文字($text, $locale, $expect)
+    {
+        App::setLocale($locale);
+
+        $validator = Validator::make(
+            [
+                'text' => $text,
+            ],
+            [
+                'text' => 'valii_emoji_and_symbol',
+            ]
+        );
+
+        $errorMessage = $validator->errors()->get('text')[0];
+        $this->assertEquals($expect, $errorMessage);
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public static function providerEmoji(): array
+    {
+        return [
+            // 各種技術記号
+            'ja' => ['⌘⌫', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            'en' => ['⌘⌫', 'en', 'The text must not contain emojis and symbols.'],
+            // 丸囲み数字
+            'ja' => ['➀', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            'en' => ['➀', 'en', 'The text must not contain emojis and symbols.'],
+            // 雑多な記号
+            'ja' => ['☀️', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            'en' => ['☀️', 'en', 'The text must not contain emojis and symbols.'],
+            // 装飾記号
+            'ja' => ['✂️', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            'en' => ['✂️', 'en', 'The text must not contain emojis and symbols.'],
+            // 矢印記号
+            'ja' => ['↑ ↓ ← →', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            'en' => ['↑ ↓ ← →', 'en', 'The text must not contain emojis and symbols.'],
+            // 補助矢印記号
+            'ja' => ['⟰⟱', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            'en' => ['⟰⟱', 'en', 'The text must not contain emojis and symbols.'],
+            // 補助数学演算子（矢印含む）
+            'ja' => ['⤒⤓', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            'en' => ['⤒⤓', 'en', 'The text must not contain emojis and symbols.'],
+            // その他の矢印記号
+            'ja' => ['➡️', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            'en' => ['➡️', 'en', 'The text must not contain emojis and symbols.'],
+            // 異体字セレクタ
+            'ja' => ['⭕️❗️', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            'en' => ['⭕️❗️', 'en', 'The text must not contain emojis and symbols.'],
+            // サロゲートペア
+            'ja' => ['😋😁', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            'en' => ['😋😁', 'en', 'The text must not contain emojis and symbols.'],
+        ];
+    }
+    
 }
