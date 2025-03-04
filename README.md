@@ -26,6 +26,10 @@ composer require fusic/valii
   - 郵便番号チェック
 - MaxByte
   - 文字列の幅をチェック
+- ValiiEmail
+  - メールアドレスチェック
+- ValiiEmojiAndSymbol
+  - 絵文字と特殊文字を含めないチェック
 
 ## Usage
 
@@ -41,7 +45,9 @@ public function rules()
             "strict_zip_code"  =>  [
                 'required',
                 'zip_code:strict'
-            ]
+            ],
+            "valii_email" => 'valii_email',
+            "valii_emoji_and_symbol" => 'valii_emoji_and_symbol',
         ];
     }
 ```

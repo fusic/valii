@@ -216,4 +216,37 @@ class ValiiValidator extends Validator
         return (bool)preg_match($regex, $value);
     }
 
+    /**
+     * validation valii_emoji_and_symbol
+     *
+     * @SuppressWarnings("unused")
+     *
+     * @param  string $attribute
+     * @param  mixed  $value
+     * @param  mixed  $parameters
+     * @return bool
+     */
+    public function validateValiiEmojiAndSymbol(string $attribute, $value, array $parameters): bool
+    {
+        // サロゲートペア以外の絵文字、特殊文字の正規表現
+        $regex = 
+            '/[\x{2300}-\x{23FF}' .     // 各種技術記号
+            '\x{2460}-\x{24FF}' .       // 丸囲み数字
+            '\x{2600}-\x{26FF}' .       // 雑多な記号（☀️、⛄ など）
+            '\x{2700}-\x{27BF}' .       // 装飾記号（✂️、✈️ など）
+            '\x{2190}-\x{21FF}' .       // 矢印記号
+            '\x{27F0}-\x{27FF}' .       // 補助矢印記号
+            '\x{2900}-\x{297F}' .       // 補助数学演算子（矢印含む）
+            '\x{2B00}-\x{2BFF}' .       // その他の矢印記号
+            '\x{FE0F}]' .               // 異体字セレクタ
+            '/u';
+
+        // サロゲートペアを含むかどうか確認
+        if (mb_strlen($value) !== strlen(mb_convert_encoding($value, 'UTF-16')) / 2) {
+            return false;
+        }
+
+        // サロゲートペア以外の絵文字、特殊文字を含むかどうか確認
+        return preg_match($regex, $value) === 0;
+    }
 }
