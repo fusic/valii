@@ -825,9 +825,55 @@ class ValiiValidatorTest extends TestCase
     /**
      * 絵文字、特殊文字のテスト
      *
-     * @dataProvider providerEmoji
+     * @dataProvider providerEmojiAndSymbol
+     * @param string $text
+     * @param bool $expect
      */
-    public function test_絵文字($text, $locale, $expect)
+    public function test_絵文字_特殊文字($text, $expect)
+    {
+        $validator = Validator::make(
+            [
+                'text' => $text,
+            ],
+            [
+                'text' => 'valii_emoji_and_symbol',
+            ]
+        );
+
+        $this->assertEquals($expect, $validator->passes());
+    }
+
+    /**
+     * テストデータ
+     *
+     * @return array
+     */
+    public static function providerEmojiAndSymbol(): array
+    {
+        return [
+            '通常' => ['あいうえお', true],
+            '各種技術記号' => ['⌘', false],
+            '丸囲み数字' => ['➀', false],
+            '雑多な記号' => ['☀️', false],
+            '装飾記号' => ['✂️', false], 
+            '矢印記号' => ['↑ ↓ ← →', false],
+            '補助矢印記号' => ['⟰⟱', false],
+            '補助数学演算子' => ['⤒⤓', false],
+            'その他の矢印記号' => ['➡️', false],
+            '異体字セレクタ' => ['⭕️❗️', false],
+            'サロゲートペア' => ['😋😁', false],
+        ];
+    }
+
+    /**
+     * 絵文字、特殊文字のテスト メッセージ テスト
+     *
+     * @dataProvider providerEmojiAndSymbolMessage
+     * @param string $text
+     * @param string $locale
+     * @param string $expect
+     */
+    public function test_絵文字_特殊文字_メッセージ($text, $locale, $expect)
     {
         App::setLocale($locale);
 
@@ -849,39 +895,39 @@ class ValiiValidatorTest extends TestCase
      *
      * @return array
      */
-    public static function providerEmoji(): array
+    public static function providerEmojiAndSymbolMessage(): array
     {
         return [
             // 各種技術記号
-            'ja' => ['⌘⌫', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
-            'en' => ['⌘⌫', 'en', 'The text must not contain emojis and symbols.'],
+            '各種技術記号_ja' => ['⌘⌫', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            '各種技術記号_en' => ['⌘⌫', 'en', 'The text must not contain emojis and symbols.'],
             // 丸囲み数字
-            'ja' => ['➀', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
-            'en' => ['➀', 'en', 'The text must not contain emojis and symbols.'],
+            '丸囲み数字_ja' => ['➀', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            '丸囲み数字_en' => ['➀', 'en', 'The text must not contain emojis and symbols.'],
             // 雑多な記号
-            'ja' => ['☀️', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
-            'en' => ['☀️', 'en', 'The text must not contain emojis and symbols.'],
+            '雑多な記号_ja' => ['☀️', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            '雑多な記号_en' => ['☀️', 'en', 'The text must not contain emojis and symbols.'],
             // 装飾記号
-            'ja' => ['✂️', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
-            'en' => ['✂️', 'en', 'The text must not contain emojis and symbols.'],
+            '装飾記号_ja' => ['✂️', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            '装飾記号_en' => ['✂️', 'en', 'The text must not contain emojis and symbols.'],
             // 矢印記号
-            'ja' => ['↑ ↓ ← →', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
-            'en' => ['↑ ↓ ← →', 'en', 'The text must not contain emojis and symbols.'],
+            '矢印記号_ja' => ['↑ ↓ ← →', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            '矢印記号_en' => ['↑ ↓ ← →', 'en', 'The text must not contain emojis and symbols.'],
             // 補助矢印記号
-            'ja' => ['⟰⟱', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
-            'en' => ['⟰⟱', 'en', 'The text must not contain emojis and symbols.'],
+            '補助矢印記号_ja' => ['⟰⟱', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            '補助矢印記号_en' => ['⟰⟱', 'en', 'The text must not contain emojis and symbols.'],
             // 補助数学演算子（矢印含む）
-            'ja' => ['⤒⤓', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
-            'en' => ['⤒⤓', 'en', 'The text must not contain emojis and symbols.'],
+            '補助数学演算子_ja' => ['⤒⤓', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            '補助数学演算子_en' => ['⤒⤓', 'en', 'The text must not contain emojis and symbols.'],
             // その他の矢印記号
-            'ja' => ['➡️', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
-            'en' => ['➡️', 'en', 'The text must not contain emojis and symbols.'],
+            'その他の矢印記号_ja' => ['➡️', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            'その他の矢印記号_en' => ['➡️', 'en', 'The text must not contain emojis and symbols.'],
             // 異体字セレクタ
-            'ja' => ['⭕️❗️', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
-            'en' => ['⭕️❗️', 'en', 'The text must not contain emojis and symbols.'],
+            '異体字セレクタ_ja' => ['⭕️❗️', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            '異体字セレクタ_en' => ['⭕️❗️', 'en', 'The text must not contain emojis and symbols.'],
             // サロゲートペア
-            'ja' => ['😋😁', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
-            'en' => ['😋😁', 'en', 'The text must not contain emojis and symbols.'],
+            'サロゲートペア_ja' => ['😋😁', 'ja', 'textは、絵文字と特殊文字を含めないでください。'],
+            'サロゲートペア_en' => ['😋😁', 'en', 'The text must not contain emojis and symbols.'],
         ];
     }
     
