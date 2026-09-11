@@ -778,6 +778,9 @@ class ValiiValidatorTest extends TestCase
             '先頭がドット' => ['.example@example.com', false],
             '末尾がドット' => ['example@example.com.', false],
             'ドットが連続' => ['example..@example.com', false],
+            'TLDに数字混入' => ['example@gmail.com0928', false],
+            'TLDが1文字' => ['example@example.c', false],
+            'TLDが2文字' => ['example@example.co', true],
         ];
     }
 
