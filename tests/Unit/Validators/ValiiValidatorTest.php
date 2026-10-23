@@ -21,6 +21,7 @@ class ValiiValidatorTest extends TestCase
      * @param string $katakana
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerKatakana')]
     public function test_全角カタカナ($katakana, $expect)
     {
         $validator = Validator::make(
@@ -60,6 +61,7 @@ class ValiiValidatorTest extends TestCase
      * @param string $katakana
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerKatakanaWithSpaces')]
     public function test_全角カタカナ_スペースあり($katakana, $expect)
     {
         $validator = Validator::make(
@@ -100,6 +102,7 @@ class ValiiValidatorTest extends TestCase
      * @param string $locale
      * @param string $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerKatakanaMessage')]
     public function test_全角カタカナ_メッセージ($katakana, $locale, $expect)
     {
         App::setLocale($locale);
@@ -140,6 +143,7 @@ class ValiiValidatorTest extends TestCase
      * @param $katakana string テストデータ
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerHankakuKatakana')]
     public function test_半角ｶﾀｶﾅ($katakana, $expect)
     {
         $validator = Validator::make(
@@ -178,6 +182,7 @@ class ValiiValidatorTest extends TestCase
      * @param $katakana string テストデータ
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerHankakuKatakanaWithSpaces')]
     public function test_半角ｶﾀｶﾅ_スペースあり($katakana, $expect)
     {
         $validator = Validator::make(
@@ -217,6 +222,7 @@ class ValiiValidatorTest extends TestCase
      * @param sting $locale
      * @param sting $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerHankakuKatakanaMessage')]
     public function test_半角ｶﾀｶﾅ_メッセージ($katakana, $locale, $expect)
     {
         App::setLocale($locale);
@@ -257,6 +263,7 @@ class ValiiValidatorTest extends TestCase
      * @param $hiragana string テストデータ
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerHiragana')]
     public function test_ひらがな($hiragana, $expect)
     {
         $validator = Validator::make(
@@ -295,6 +302,7 @@ class ValiiValidatorTest extends TestCase
      * @param $hiragana string テストデータ
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerHiraganaWithSpaces')]
     public function test_ひらがな_スペースあり($hiragana, $expect)
     {
         $validator = Validator::make(
@@ -334,6 +342,7 @@ class ValiiValidatorTest extends TestCase
      * @param string $locale
      * @param string $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerHiraganaMessage')]
     public function test_ひらがな_メッセージ($hiragana, $locale, $expect)
     {
         App::setLocale($locale);
@@ -374,6 +383,7 @@ class ValiiValidatorTest extends TestCase
      * @param $zenkaku string テストデータ
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerZenkaku')]
     public function test_全角($zenkaku, $expect)
     {
         $validator = Validator::make(
@@ -416,6 +426,7 @@ class ValiiValidatorTest extends TestCase
      * @param string $locale
      * @param string $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerZenkakuMessage')]
     public function test_全角_メッセージ($zenkaku, $locale, $expect)
     {
         App::setLocale($locale);
@@ -456,6 +467,7 @@ class ValiiValidatorTest extends TestCase
      * @param $tel string テストデータ
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerTel')]
     public function test_電話番号($tel, $expect)
     {
         $validator = Validator::make(
@@ -503,6 +515,7 @@ class ValiiValidatorTest extends TestCase
      * @param string $locale
      * @param string $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerTelMessage')]
     public function test_電話番号_メッセージ($tel, $locale, $expect)
     {
         App::setLocale($locale);
@@ -543,6 +556,7 @@ class ValiiValidatorTest extends TestCase
      * @param $zipCode string テストデータ
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerZipCode')]
     public function test_郵便番号($zipCode, $expect)
     {
         $validator = Validator::make(
@@ -581,6 +595,7 @@ class ValiiValidatorTest extends TestCase
      * @param $zipCode string テストデータ
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerZipCodeStrict')]
     public function test_郵便番号_strict($zipCode, $expect)
     {
         $validator = Validator::make(
@@ -621,6 +636,7 @@ class ValiiValidatorTest extends TestCase
      * @param string $locale
      * @param string $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerZipCodeMessage')]
     public function test_郵便番号_メッセージ($zipCode, $locale, $expect)
     {
         App::setLocale($locale);
@@ -661,6 +677,7 @@ class ValiiValidatorTest extends TestCase
      * @param $text string テストデータ
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerMaxByte')]
     public function test_バイト数($text, $expect)
     {
         $validator = Validator::make(
@@ -701,6 +718,7 @@ class ValiiValidatorTest extends TestCase
      * @param string $locale
      * @param string $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerMaxByteMessage')]
     public function test_バイト数_メッセージ($text, $locale, $expect)
     {
         App::setLocale($locale);
@@ -741,6 +759,7 @@ class ValiiValidatorTest extends TestCase
      * @param $text string テストデータ
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerEmail')]
     public function test_メールアドレス($text, $expect)
     {
         $validator = Validator::make(
@@ -792,6 +811,7 @@ class ValiiValidatorTest extends TestCase
      * @param string $locale
      * @param string $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerEmailMessage')]
     public function test_メールアドレス_メッセージ($text, $locale, $expect)
     {
         App::setLocale($locale);
@@ -832,6 +852,7 @@ class ValiiValidatorTest extends TestCase
      * @param string $text
      * @param bool $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerEmojiAndSymbol')]
     public function test_絵文字_特殊文字($text, $expect)
     {
         $validator = Validator::make(
@@ -876,6 +897,7 @@ class ValiiValidatorTest extends TestCase
      * @param string $locale
      * @param string $expect
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerEmojiAndSymbolMessage')]
     public function test_絵文字_特殊文字_メッセージ($text, $locale, $expect)
     {
         App::setLocale($locale);
