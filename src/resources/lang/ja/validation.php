@@ -22,7 +22,7 @@ return [
     'max_byte' => ':attributeは:max_byteバイト以下にしてください。',
     'valii_email' => ':attributeは、有効なメールアドレスにしてください。',
     'valii_emoji_and_symbol' => ':attributeは、絵文字と特殊文字を含めないでください。',
-    'date' => [
+    'date_placeholders' => [
         'yesterday' => '昨日',
         'tomorrow' => '明日',
         'today' => '今日',

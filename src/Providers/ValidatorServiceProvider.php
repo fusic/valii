@@ -21,6 +21,14 @@ class ValidatorServiceProvider extends ServiceProvider
             // バリデーションメッセージを取得
             $customMessages = trans('valii::validation', [], App::getLocale());
 
+            // date が配列のままだと、Laravel 12.55 以降で TypeError になる
+            if (is_array($customMessages)) {
+                unset($customMessages['date_placeholders']);
+                if (isset($customMessages['date']) && is_array($customMessages['date'])) {
+                    unset($customMessages['date']);
+                }
+            }
+
             $validator = new ValiiValidator($translator, $data, $rules, $messages, $attributes);
 
             // バリデータにメッセージ群をセット
