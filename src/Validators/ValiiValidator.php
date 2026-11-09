@@ -19,7 +19,11 @@ class ValiiValidator extends Validator
      */
     public function replaceBefore($message, $attribute, $rule, $parameters)
     {
-        $valiiDate = trans('valii::validation.date');
+        // 旧キー（date）は、公開済みの lang ファイルを更新していない利用側のために読む
+        $valiiDate = trans('valii::validation.date_placeholders');
+        if (!is_array($valiiDate)) {
+            $valiiDate = trans('valii::validation.date');
+        }
         if (is_array($valiiDate)) {
             $parameter_translated = str_replace(
                 array_keys($valiiDate),

@@ -955,5 +955,96 @@ class ValiiValidatorTest extends TestCase
             'サロゲートペア_en' => ['😋😁', 'en', 'The text must not contain emojis and symbols.'],
         ];
     }
-    
+
+    # --------------------------------------------------------------
+    # date（before 系の置換語と date ルールのメッセージの衝突）
+
+    /**
+     * date ルールの失敗メッセージは、置換語の配列ではなく文字列になる
+     */
+    public function test_dateルールの失敗メッセージは文字列()
+    {
+        App::setLocale('ja');
+        $validator = Validator::make(
+            ['birthday' => '2000-13-45'],
+            ['birthday' => ['required', 'date']]
+        );
+
+        $this->assertTrue($validator->fails());
+        $messages = $validator->errors()->get('birthday');
+        $this->assertCount(1, $messages);
+        $this->assertIsString($messages[0]);
+    }
+
+    /**
+     * 利用側が文字列で上書きした date のメッセージは、date ルールに使われる
+     */
+    public function test_文字列のdateは_dateルールのメッセージになる()
+    {
+        App::setLocale('ja');
+        app('translator')->addLines(['validation.date' => ':attributeは有効な日付ではありません。'], 'ja', 'valii');
+        $validator = Validator::make(
+            ['birthday' => '2000-13-45'],
+            ['birthday' => ['required', 'date']]
+        );
+
+        $this->assertTrue($validator->fails());
+        $this->assertSame('birthdayは有効な日付ではありません。', $validator->errors()->first('birthday'));
+    }
+
+    /**
+     * before 系ルールのメッセージ中の :date は、置換語で訳される
+     *
+     * @dataProvider providerBeforeWords
+     * @param string $rule
+     * @param string $value
+     * @param string $expect
+     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerBeforeWords')]
+    public function test_beforeの置換語($rule, $value, $expect)
+    {
+        App::setLocale('ja');
+        $validator = Validator::make(
+            ['d' => $value],
+            ['d' => $rule],
+            ['before' => ':attributeは:dateより前にしてください。', 'after' => ':attributeは:dateより後にしてください。']
+        );
+
+        $this->assertTrue($validator->fails());
+        $this->assertSame($expect, $validator->errors()->first('d'));
+    }
+
+    /**
+     * テストデータ
+     */
+    public static function providerBeforeWords()
+    {
+        return [
+            'before_today' => ['before:today', '2999-01-01', 'dは今日より前にしてください。'],
+            'before_yesterday' => ['before:yesterday', '2999-01-01', 'dは昨日より前にしてください。'],
+            'before_tomorrow' => ['before:tomorrow', '2999-01-01', 'dは明日より前にしてください。'],
+            'after_tomorrow' => ['after:tomorrow', '2000-01-01', 'dは明日より後にしてください。'],
+        ];
+    }
+
+    /**
+     * 旧キー（date）の配列を持つ lang を公開済みの利用側でも、置換語が使われ、date ルールは壊れない
+     */
+    public function test_旧キーdateの配列でも置換語が使われる()
+    {
+        App::setLocale('ja');
+        app('translator')->addLines(['validation.date_placeholders' => '', 'validation.date' => ['today' => '本日']], 'ja', 'valii');
+
+        $before = Validator::make(
+            ['d' => '2999-01-01'],
+            ['d' => 'before:today'],
+            ['before' => ':attributeは:dateより前にしてください。']
+        );
+        $this->assertSame('dは本日より前にしてください。', $before->errors()->first('d'));
+
+        $date = Validator::make(['d' => '2000-13-45'], ['d' => 'date']);
+        $this->assertTrue($date->fails());
+        $this->assertIsString($date->errors()->first('d'));
+    }
+
 }
